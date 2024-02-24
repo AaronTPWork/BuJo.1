@@ -31,11 +31,12 @@ import {
   Exclamation2,
   Exclamation3,
   QuestionMark,
+  InitNote,
 } from '../../../../Components/icons';
 import { useJournalRefs } from '../../../../Services/Reference';
 
 const iconComponents = {
-  'bullet-init-note': CirclePlus,
+  'bullet-init-note': InitNote,
   'circle-init-task': Circle,
   'circle-started-task': CircleHalf,
   'circle-completed-task': CircleFull,
