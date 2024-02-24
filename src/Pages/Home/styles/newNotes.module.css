@@ -1,0 +1,37 @@
+.home_newNotes {
+  @apply flex flex-col w-3/4 pr-20 border-x;
+}
+
+.newNotes_note {
+  @apply relative z-20 h-screen border-r;
+}
+
+.newNotes_header {
+  @apply flex justify-between h-20 border;
+}
+.newNotes_icons {
+  @apply absolute z-10 w-10 h-screen mt-24 border-l border-r ml-11;
+}
+.newNotes_iconAdd {
+  @apply flex;
+}
+
+.newNotes_noteContent {
+  @apply flex ml-10;
+}
+
+.newNotes_iconList {
+  @apply z-20 flex flex-col w-56 p-2 mt-2 ml-5 bg-gray-100 border border-gray-400 rounded;
+}
+
+.newNotes_iconChoices {
+  @apply flex flex-col items-start mt-2;
+}
+
+.icon_button {
+  @apply flex w-full p-2 text-xs border-t border-gray-300 hover:bg-slate-300;
+}
+
+.newNotes_submitNote {
+  @apply absolute top-0 right-0;
+}

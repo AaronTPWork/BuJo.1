@@ -1,0 +1,11 @@
+.home {
+  @apply flex flex-col;
+}
+
+.home_header {
+  @apply h-10 bg-gray-100;
+}
+
+.home_app {
+  @apply flex;
+}

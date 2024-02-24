@@ -1,0 +1,7 @@
+.TextInput {
+  @apply flex flex-col;
+}
+
+.TextInput input {
+  @apply flex h-10 px-2 text-center bg-gray-200 border border-gray-400 rounded-xl focus:outline-none focus:border-2 focus:border-gray-500;
+}

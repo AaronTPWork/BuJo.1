@@ -1,0 +1,4 @@
+@tailwind components;
+@import "./Pages/Home/styles/newNotes.module.css";
+@tailwind base;
+@tailwind utilities;

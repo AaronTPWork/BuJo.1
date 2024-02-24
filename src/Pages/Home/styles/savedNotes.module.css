@@ -1,0 +1,39 @@
+.home_savedNotes {
+  @apply w-1/2 h-screen border-gray-300 border-x;
+}
+
+.home_savedNotesHeader {
+  @apply flex h-20 border-gray-300 border-y;
+}
+
+.home_savedNotesListIcon {
+  @apply flex h-full px-5 bg-gray-200 w-fit;
+}
+
+.home_savedNotesTileIcon {
+  @apply flex h-full px-5 w-fit;
+}
+
+.home_savedNotesNote {
+  @apply flex justify-between px-2 py-5 border-y;
+}
+
+.home_savedNotesNoteSelected {
+  @apply flex justify-between px-2 py-5 border-y bg-gray-200;
+}
+
+.home_savedNoteDetails {
+  @apply justify-center text-center;
+}
+
+.home_savedNoteDetails h3 {
+  @apply text-lg font-bold;
+}
+
+.home_savedNoteDetails p {
+  @apply text-sm;
+}
+
+.home_savedNoteDate {
+  @apply my-auto mr-4 text-gray-500;
+}
