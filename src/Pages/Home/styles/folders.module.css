@@ -1,5 +1,5 @@
 .folderTable {
-  @apply flex flex-col w-1/3;
+  @apply h-screen w-1/3;
 }
 
 .folderTableHeader {
@@ -7,7 +7,7 @@
 }
 
 .folders {
-  @apply flex flex-col mt-5 ml-5 font-bold gap-y-5;
+  @apply font-bold h-[85%] overflow-scroll;
 }
 
 .folderTableFooter {

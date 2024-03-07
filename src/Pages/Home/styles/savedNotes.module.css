@@ -1,5 +1,5 @@
 .home_savedNotes {
-  @apply w-1/2 h-screen border-gray-300 border-x;
+  @apply w-1/2 border-gray-300 border-x;
 }
 
 .home_savedNotesHeader {
@@ -15,11 +15,11 @@
 }
 
 .home_savedNotesNote {
-  @apply flex justify-between px-2 py-5 border-y;
+  @apply flex justify-between px-2 py-5 border-y cursor-pointer;
 }
 
 .home_savedNotesNoteSelected {
-  @apply flex justify-between px-2 py-5 border-y bg-gray-200;
+  @apply flex justify-between px-2 py-5 border-y bg-gray-200 cursor-pointer;
 }
 
 .home_savedNoteDetails {

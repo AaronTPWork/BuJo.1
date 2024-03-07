@@ -1,39 +1,63 @@
-import React, { useState } from "react";
+import React from 'react';
 
-import styles from "../styles/folders.module.css";
-import { AddModalForm } from "./modals/AddFolderModal";
+import styles from '../styles/folders.module.css';
+import { eachDayOfInterval, format, isSameDay } from 'date-fns';
+import { useGlobalValues } from '../../../Stores/GlobalValues';
+import { useDailyJournalsByUser } from '../../../Services/Journal';
+
+function getDatesArray() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const startDate = new Date(year, 0, 1); // January 1st of the current year
+
+  const dates = eachDayOfInterval({ start: startDate, end: today });
+
+  return dates.map((date) => ({
+    label: isSameDay(date, today) ? 'Today' : format(date, 'MM.dd.yyyy'),
+    value: format(date, 'yyyy-MM-dd'),
+  }));
+}
 
 export const Folders = () => {
-  const [addFolderModal, setAddFolderModal] = useState(false);
+  const dates = getDatesArray();
+  const {
+    selectedDate,
+    selectedUserId,
+    actions: { changeselectedDate },
+  } = useGlobalValues();
+  const { journals } = useDailyJournalsByUser(selectedUserId);
 
   return (
     <>
       <div className={styles.folderTable}>
         <div className={styles.folderTableHeader}></div>
         <div className={styles.folders}>
-          {/* Inv Folders */}
-          <div className="w-full py-3 bg-gray-200">
-            <h3>Lorem ipsum Folder 1</h3>
-          </div>
-
-          <h3>Lorem ipsum Folder 2</h3>
-          <h3>Lorem ipsum Folder 3</h3>
-          <h3>Lorem ipsum Folder 4</h3>
-          <h3>Lorem ipsum Folder 5</h3>
+          {selectedUserId && selectedUserId.length ? (
+            dates.reverse().map((date) => {
+              const isSelected = date.value === selectedDate;
+              let recordCount = 0;
+              const found = journals.filter((journal) => format(journal.date_created, 'yyyy-MM-dd') === date.value);
+              if (found) {
+                recordCount = found.length;
+              }
+              return (
+                <div
+                  onClick={() => {
+                    changeselectedDate(date.value);
+                  }}
+                  className={`${
+                    isSelected ? 'bg-gray-200' : ''
+                  } w-full pl-4 p-2 cursor-pointer flex flex-row justify-between`}
+                >
+                  <h3>{date.label}</h3>
+                  <h3>{recordCount}</h3>
+                </div>
+              );
+            })
+          ) : (
+            <div className="flex justify-center items-center h-full w-full">No User Selected</div>
+          )}
         </div>
-        <div className={styles.folderTableFooter}>
-          <button
-            onClick={() => setAddFolderModal(true)}
-            className={styles.addFolderButton}
-          >
-            <span className="material-symbols-outlined">add_circle</span>Add
-            Folder
-          </button>
-        </div>
-        <AddModalForm
-          isModalOpen={addFolderModal}
-          closeModal={() => setAddFolderModal(false)}
-        />
       </div>
     </>
   );

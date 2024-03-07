@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  CirclePlus,
   Circle,
   CircleHalf,
   CircleFull,

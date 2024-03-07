@@ -1007,3 +1007,21 @@ export const QuestionMark = ({ styles }) => {
     </>
   );
 };
+export function UserIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`h-${props.size} w-${props.size} ${props.className}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      {...props}
+    >
+      <path fillRule="evenodd" d="M10 12a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+      <path
+        fillRule="evenodd"
+        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 2a6 6 0 100 12 6 6 0 000-12zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}

@@ -1,2 +1,2 @@
-export { useDailyJournals } from './hooks';
+export { useDailyJournals, useDailyJournalsByUser } from './hooks';
 export { createJournal, editJournal } from './api';

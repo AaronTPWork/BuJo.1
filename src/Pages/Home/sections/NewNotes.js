@@ -5,6 +5,7 @@ import { useDailyJournalNotes } from '../../../Services/Journal/hooks';
 import { BulletIcon } from './components/BulletIcon';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createJournal, editJournal } from '../../../Services/Journal';
+import { useGlobalValues } from '../../../Stores/GlobalValues';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -38,23 +39,27 @@ const InputArea = ({ value, handleInput, note, index }) => {
   );
 };
 
-const NoteWithAnnotations = ({ selectedJournal }) => {
+const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
   const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
   const [floatingMenuPosition, setFloatingMenuPosition] = useState({
     x: 0,
     y: 0,
   });
-  const { notes } = useDailyJournalNotes(selectedJournal);
+  const { selectedDate, selectedProject } = useGlobalValues();
+
+  const { notes } = useDailyJournalNotes(selectedDate);
   const [currentNote, setcurrentNote] = useState();
   const qClient = useQueryClient();
+
+  const filteredNotesByProjectStream = notes?.filter((note) => note.project_stream === selectedProject);
 
   const invalidateQueries = () => {
     qClient.invalidateQueries({
       queryKey: ['journals'],
     });
     qClient.invalidateQueries({
-      queryKey: ['journals', selectedJournal],
+      queryKey: ['journals', selectedDate],
     });
   };
 
@@ -102,7 +107,7 @@ const NoteWithAnnotations = ({ selectedJournal }) => {
       if (!note.id) {
         debounce(
           createNote({
-            date_created: selectedJournal,
+            date_created: selectedDate,
             text_stream: newText,
           }),
           500
@@ -122,7 +127,7 @@ const NoteWithAnnotations = ({ selectedJournal }) => {
   const selectPrimaryIcon = (iconId) => {
     if (!currentNote.id) {
       createNote({
-        date_created: selectedJournal,
+        date_created: selectedDate,
         bullet_stream: iconId,
       });
     } else {
@@ -137,7 +142,7 @@ const NoteWithAnnotations = ({ selectedJournal }) => {
   const selectSecondaryIcon = (iconId) => {
     if (!currentNote.id) {
       createNote({
-        date_created: selectedJournal,
+        date_created: selectedDate,
         context_stream: iconId,
       });
     } else {
@@ -150,7 +155,7 @@ const NoteWithAnnotations = ({ selectedJournal }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-3/4 border-x">
+    <div className="flex flex-col w-3/4 border-x">
       <div className="flex h-20 border">
         <PencilPage styles={'h-10 my-auto ml-5'} />
         <div className="flex gap-x-5">
@@ -166,9 +171,9 @@ const NoteWithAnnotations = ({ selectedJournal }) => {
           </div>
         </div>
       </div>
-      <div className="flex h-[90%] overflow-scroll">
+      <div className="flex h-[85%] overflow-scroll">
         <div className="flex flex-col h-full w-full pt-1 border-r border-r-[#e5e7eb] relative">
-          {[...(notes || []), {}]?.map((note, index) => {
+          {[...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
             return (
               <div key={`note-detail-${index}`} className="flex w-full items-start">
                 <div className="w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">

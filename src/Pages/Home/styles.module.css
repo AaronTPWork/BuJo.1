@@ -1,11 +1,11 @@
 .home {
-  @apply flex flex-col;
+  @apply h-screen flex flex-col;
 }
 
 .home_header {
-  @apply h-10 bg-gray-100;
+  @apply bg-white;
 }
 
 .home_app {
-  @apply flex;
+  @apply flex h-full;
 }

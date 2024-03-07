@@ -18,3 +18,12 @@ export const useDailyJournalNotes = (date) => {
 
   return { notes: data && data.data ? Object.values(data?.data) : [], isLoading, isRefetching };
 };
+
+export const useDailyJournalsByUser = (userId) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['journals', userId],
+    queryFn: () => axiosInstance.get(`/journal/daily_journal_userid?user_id=${userId}`),
+  });
+
+  return { journals: data && data.data ? Object.values(data?.data) : [], isLoading };
+};
