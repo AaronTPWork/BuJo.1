@@ -29,7 +29,8 @@ const InputArea = ({ value, handleInput, note, index }) => {
   }, [note.text_stream]);
 
   return (
-    <textarea
+    <input
+      type="text"
       className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap"
       placeholder="Type your note here..."
       value={localValue ?? ''}
