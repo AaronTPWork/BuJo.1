@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createSelectors } from './utils';
+import { format } from 'date-fns';
+
+export const todayDate = format(new Date(), 'yyyy-MM-dd');
 
 let resolveHydrationValue;
 const hasHydrated = new Promise((res) => {
@@ -9,8 +12,11 @@ const hasHydrated = new Promise((res) => {
 
 const defaultValues = {
   selectedUserId: '',
-  selectedDate: '',
+  selectedDate: todayDate,
   selectedProject: '',
+  showSearch: false,
+  currentSearch: '',
+  selectedNote: {},
 };
 
 export const useGlobalValues = createSelectors(
@@ -35,6 +41,18 @@ export const useGlobalValues = createSelectors(
           },
           clear() {
             set({ ...defaultValues });
+          },
+          showSearch() {
+            set({ showSearch: true });
+          },
+          hideSearch() {
+            set({ showSearch: false });
+          },
+          setCurrentSearch(search) {
+            set({ currentSearch: search });
+          },
+          setSelectedNote(note) {
+            set({ selectedNote: note });
           },
         },
       }),

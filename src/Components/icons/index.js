@@ -1010,18 +1010,32 @@ export const QuestionMark = ({ styles }) => {
 export function UserIcon(props) {
   return (
     <svg
+      version="1.0"
       xmlns="http://www.w3.org/2000/svg"
-      className={`h-${props.size} w-${props.size} ${props.className}`}
-      viewBox="0 0 20 20"
-      fill="currentColor"
+      width="50.000000pt"
+      height="50.000000pt"
+      viewBox="0 0 50.000000 50.000000"
+      preserveAspectRatio="xMidYMid meet"
       {...props}
     >
-      <path fillRule="evenodd" d="M10 12a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-      <path
-        fillRule="evenodd"
-        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 2a6 6 0 100 12 6 6 0 000-12zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"
-        clipRule="evenodd"
-      />
+      <g transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)" fill={props.fillcolor} stroke="none">
+        <path
+          d="M210 470 c-178 -33 -245 -259 -113 -381 46 -43 91 -61 153 -61 126 0
+222 96 221 223 0 140 -125 245 -261 219z m141 -33 c64 -34 102 -93 107 -166 5
+-62 -7 -112 -36 -148 l-17 -23 -50 19 c-58 22 -68 48 -39 103 10 18 19 57 21
+86 3 45 0 56 -21 77 -33 33 -104 35 -131 4 -26 -28 -27 -123 -2 -166 10 -18
+17 -44 15 -59 -2 -21 -12 -30 -52 -45 -27 -10 -53 -16 -58 -13 -24 15 -48 87
+-48 144 0 127 80 209 206 210 45 0 72 -6 105 -23z"
+        />
+      </g>
     </svg>
   );
 }
+
+export const BlankSVG = (props) => {
+  return (
+    <svg viewBox="0 0 15.36 15.36" className="h-4 w-4">
+      {/* <rect width="15" height="15" fill="none" stroke="black" strokeWidth="1" /> */}
+    </svg>
+  );
+};

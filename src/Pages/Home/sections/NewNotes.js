@@ -5,7 +5,7 @@ import { useDailyJournalNotes } from '../../../Services/Journal/hooks';
 import { BulletIcon } from './components/BulletIcon';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createJournal, editJournal } from '../../../Services/Journal';
-import { useGlobalValues } from '../../../Stores/GlobalValues';
+import { todayDate, useGlobalValues } from '../../../Stores/GlobalValues';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -46,13 +46,20 @@ const NoteWithAnnotations = () => {
     x: 0,
     y: 0,
   });
-  const { selectedDate, selectedProject } = useGlobalValues();
+  const {
+    selectedDate,
+    selectedProject,
+    selectedUserId,
+    actions: { showSearch },
+  } = useGlobalValues();
 
   const { notes } = useDailyJournalNotes(selectedDate);
   const [currentNote, setcurrentNote] = useState();
   const qClient = useQueryClient();
 
-  const filteredNotesByProjectStream = notes?.filter((note) => note.project_stream === selectedProject);
+  const filteredNotesByProjectStream = notes?.filter(
+    (note) => note.project_stream === selectedProject && note.user_id === selectedUserId
+  );
 
   const invalidateQueries = () => {
     qClient.invalidateQueries({
@@ -105,13 +112,24 @@ const NoteWithAnnotations = () => {
     const newText = value;
     if (e.key === 'Enter' && !e.shiftKey) {
       if (!note.id) {
-        debounce(
-          createNote({
-            date_created: selectedDate,
-            text_stream: newText,
-          }),
-          500
-        );
+        // debounce(() => {
+        //   const newNote = {
+        //     date_created: selectedDate,
+        //     user_id: selectedUserId,
+        //     text_stream: newText,
+        //   };
+        //   console.log('🚀 ~ handleInput ~ note:', newNote);
+        //   if (selectedProject) newNote.project_stream = selectedProject;
+        //   return createNote(newNote);
+        // }, 500);
+        const newNote = {
+          date_created: selectedDate ?? todayDate,
+          user_id: selectedUserId,
+          text_stream: newText,
+        };
+        console.log('🚀 ~ handleInput ~ note:', newNote);
+        if (selectedProject) newNote.project_stream = selectedProject;
+        createNote(newNote);
       } else {
         debounce(
           editNote({
@@ -126,10 +144,13 @@ const NoteWithAnnotations = () => {
 
   const selectPrimaryIcon = (iconId) => {
     if (!currentNote.id) {
-      createNote({
-        date_created: selectedDate,
+      const newNote = {
+        date_created: selectedDate ?? todayDate,
+        user_id: selectedUserId,
         bullet_stream: iconId,
-      });
+      };
+      if (selectedProject) newNote.project_stream = selectedProject;
+      createNote(newNote);
     } else {
       editNote({
         ...currentNote,
@@ -141,14 +162,18 @@ const NoteWithAnnotations = () => {
 
   const selectSecondaryIcon = (iconId) => {
     if (!currentNote.id) {
-      createNote({
-        date_created: selectedDate,
-        context_stream: iconId,
-      });
+      const newNote = {
+        date_created: selectedDate ?? todayDate,
+        project_stream: selectedProject,
+        user_id: selectedUserId,
+        context_stream: iconId ?? '0',
+      };
+      if (selectedProject) newNote.project_stream = selectedProject;
+      createNote(newNote);
     } else {
       editNote({
         ...currentNote,
-        context_stream: iconId,
+        context_stream: iconId ?? '0',
       });
     }
     setShowSecondaryFloatingMenu(false);
@@ -156,7 +181,7 @@ const NoteWithAnnotations = () => {
 
   return (
     <div className="flex flex-col w-3/4 border-x">
-      <div className="flex h-20 border">
+      <div className="flex justify-between h-20 border">
         <PencilPage styles={'h-10 my-auto ml-5'} />
         <div className="flex gap-x-5">
           <div className="flex px-5 my-auto border-r h-fit">
@@ -166,42 +191,51 @@ const NoteWithAnnotations = () => {
           <button className="">
             <DownloadIcon styles={'h-10'} />
           </button>
-          <div className="flex px-5 my-auto border-l h-fit">
+          <div
+            onClick={() => {
+              showSearch();
+            }}
+            className="flex px-5 my-auto border-l h-fit cursor-pointer"
+          >
             <SearchIcon styles={'w-10 my-auto'} />
           </div>
         </div>
       </div>
       <div className="flex h-[85%] overflow-scroll">
         <div className="flex flex-col h-full w-full pt-1 border-r border-r-[#e5e7eb] relative">
-          {[...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
-            return (
-              <div key={`note-detail-${index}`} className="flex w-full items-start">
-                <div className="w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                  <BulletIcon
-                    refName={'ref_context'}
-                    note={note}
-                    selectedIconId={note.context_stream}
-                    getIconName={(ref) => `${ref.name}`}
-                    handleClick={handleSecondaryClick}
-                    index={index}
-                  />
+          <div className="border-r border-r-[#e5e7eb] w-[6%] h-[100%] absolute" />
+          <div className="border-r border-r-[#e5e7eb] w-[13%] h-full absolute" />
+          {selectedUserId &&
+            selectedUserId.length > 0 &&
+            [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
+              return (
+                <div key={`note-detail-${index}`} className="flex w-full items-start">
+                  <div className="w-[7%] h-full flex justify-center items-center ">
+                    <BulletIcon
+                      refName={'ref_context'}
+                      note={note}
+                      selectedIconId={note.context_stream}
+                      getIconName={(ref) => `${ref.name}`}
+                      handleClick={handleSecondaryClick}
+                      index={index}
+                    />
+                  </div>
+                  <div className="w-[7%] h-full flex justify-center items-center ">
+                    <BulletIcon
+                      refName={'ref_bullet'}
+                      note={note}
+                      selectedIconId={note.bullet_stream}
+                      getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
+                      handleClick={handlePrimaryClick}
+                      index={index}
+                    />
+                  </div>
+                  <div className="flex flex-col w-full  pl-1">
+                    <InputArea handleInput={handleInput} note={note} index={index} />
+                  </div>
                 </div>
-                <div className="w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                  <BulletIcon
-                    refName={'ref_bullet'}
-                    note={note}
-                    selectedIconId={note.bullet_stream}
-                    getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
-                    handleClick={handlePrimaryClick}
-                    index={index}
-                  />
-                </div>
-                <div className="flex flex-col w-full  pl-1">
-                  <InputArea handleInput={handleInput} note={note} index={index} />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       {showPrimaryFloatingMenu && (

@@ -31,6 +31,7 @@ import {
   Exclamation3,
   QuestionMark,
   InitNote,
+  BlankSVG,
 } from '../../../../Components/icons';
 import { useJournalRefs } from '../../../../Services/Reference';
 
@@ -54,9 +55,11 @@ const iconComponents = {
   'diamond-migrated-appointment': DiamondLeft,
   'diamond-delegated-appointment': DiamondRight,
   'diamond-cancelled-appointment': DiamondX,
-  'no context': Astrick,
+  'no context': BlankSVG,
+  important: Astrick,
   reminder: Exclamation1,
-  important: Exclamation3,
+  'reminder-2': Exclamation2,
+  'reminder-3': Exclamation3,
   question: QuestionMark,
   money: DollarBill,
   PencilPage,

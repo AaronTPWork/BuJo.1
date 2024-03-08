@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../axios-instance';
 
 export const useDailyJournals = () => {
@@ -26,4 +26,16 @@ export const useDailyJournalsByUser = (userId) => {
   });
 
   return { journals: data && data.data ? Object.values(data?.data) : [], isLoading };
+};
+
+export const useDailyJournalsBySearch = () => {
+  const {
+    mutate: searchValue,
+    data,
+    isLoading,
+  } = useMutation({
+    mutationFn: (search, userId) => axiosInstance.get(`/journal/journal_search?search=${search}&user_id=${userId}`),
+  });
+
+  return { searches: data && data.data ? Object.values(data?.data) : [], isLoading, searchValue };
 };

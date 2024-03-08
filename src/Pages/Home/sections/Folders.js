@@ -23,7 +23,7 @@ export const Folders = () => {
   const {
     selectedDate,
     selectedUserId,
-    actions: { changeselectedDate },
+    actions: { changeselectedDate, changeselectedProject },
   } = useGlobalValues();
   const { journals } = useDailyJournalsByUser(selectedUserId);
 
@@ -36,13 +36,16 @@ export const Folders = () => {
             dates.reverse().map((date) => {
               const isSelected = date.value === selectedDate;
               let recordCount = 0;
-              const found = journals.filter((journal) => format(journal.date_created, 'yyyy-MM-dd') === date.value);
+              const found = journals.filter(
+                (journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === date.value
+              );
               if (found) {
                 recordCount = found.length;
               }
               return (
                 <div
                   onClick={() => {
+                    changeselectedProject('');
                     changeselectedDate(date.value);
                   }}
                   className={`${

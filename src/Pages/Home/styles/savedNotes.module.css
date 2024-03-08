@@ -23,7 +23,7 @@
 }
 
 .home_savedNoteDetails {
-  @apply justify-center text-center;
+  /* @apply justify-center text-center; */
 }
 
 .home_savedNoteDetails h3 {
