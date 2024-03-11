@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 
 import styles from '../styles/folders.module.css';
 import { eachDayOfInterval, format, isSameDay } from 'date-fns';
@@ -27,21 +27,29 @@ export const Folders = () => {
   } = useGlobalValues();
   const { journals } = useDailyJournalsByUser(selectedUserId);
 
+  const showingDates = useMemo(() => {
+    const filteredDates = dates.filter(
+      (date) =>
+        journals.filter((journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === date.value)
+          .length
+    );
+    return filteredDates.map((element) => ({
+      ...element,
+      recordCount: journals.filter(
+        (journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === element.value
+      ).length,
+    }));
+  }, [dates, journals]);
+
   return (
     <>
       <div className={styles.folderTable}>
         <div className={styles.folderTableHeader}></div>
         <div className={styles.folders}>
           {selectedUserId && selectedUserId.length ? (
-            dates.reverse().map((date) => {
+            showingDates.reverse().map((date) => {
               const isSelected = date.value === selectedDate;
-              let recordCount = 0;
-              const found = journals.filter(
-                (journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === date.value
-              );
-              if (found) {
-                recordCount = found.length;
-              }
+
               return (
                 <div
                   onClick={() => {
@@ -53,7 +61,7 @@ export const Folders = () => {
                   } w-full pl-4 p-2 cursor-pointer flex flex-row justify-between`}
                 >
                   <h3>{date.label}</h3>
-                  <h3>{recordCount}</h3>
+                  <h3>{date.recordCount}</h3>
                 </div>
               );
             })
