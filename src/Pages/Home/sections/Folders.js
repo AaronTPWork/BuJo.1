@@ -52,6 +52,7 @@ export const Folders = () => {
 
               return (
                 <div
+                  key={date.value}
                   onClick={() => {
                     changeselectedProject('');
                     changeselectedDate(date.value);

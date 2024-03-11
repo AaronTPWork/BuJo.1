@@ -34,7 +34,8 @@ export const useDailyJournalsBySearch = () => {
     data,
     isLoading,
   } = useMutation({
-    mutationFn: (search, userId) => axiosInstance.get(`/journal/journal_search?search=${search}&user_id=${userId}`),
+    mutationFn: (search, userId) =>
+      axiosInstance.get(`/journal/journal_search?search=${search}&user_id=${userId ?? '0'}`),
   });
 
   return { searches: data && data.data ? Object.values(data?.data) : [], isLoading, searchValue };

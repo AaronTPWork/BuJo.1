@@ -10,12 +10,14 @@ export const ProjectItem = ({ id, handleClick, selectedProject, height = 'h-10' 
 
   const projectData = data.length === 1 ? data[0] : null;
 
-  // if (!projectData) return null;
-
   return (
     <div
-      className={selectedProject === projectData?.id ? styles.home_savedNotesNoteSelected : styles.home_savedNotesNote}
-      onClick={() => handleClick(projectData)}
+      className={
+        selectedProject === projectData?.id || (selectedProject === '0' && projectData === null)
+          ? styles.home_savedNotesNoteSelected
+          : styles.home_savedNotesNote
+      }
+      onClick={() => handleClick && handleClick(projectData)}
     >
       <div className={`flex items-center ${height}`}>
         <ThreeDots styles={`my-auto text-gray-300 ${height}`} />
@@ -26,7 +28,6 @@ export const ProjectItem = ({ id, handleClick, selectedProject, height = 'h-10' 
     </div>
   );
 };
-
 export const SavedNotes = () => {
   const {
     selectedDate,
@@ -58,14 +59,15 @@ export const SavedNotes = () => {
         <div className="overflow-scroll h-[85%]">
           {uniqueProjectStreams?.map((projectId, idx) => {
             return (
-              <ProjectItem
-                id={projectId}
-                key={idx}
-                selectedProject={selectedProject}
-                handleClick={(projectData) => {
-                  changeselectedProject(projectData?.id ?? '0');
-                }}
-              />
+              <div className="border-y" key={`project-idx-${projectId}`}>
+                <ProjectItem
+                  id={projectId}
+                  selectedProject={selectedProject}
+                  handleClick={(projectData) => {
+                    changeselectedProject(projectData?.id ?? '0');
+                  }}
+                />
+              </div>
             );
           })}
         </div>

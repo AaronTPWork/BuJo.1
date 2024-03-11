@@ -15,11 +15,11 @@
 }
 
 .home_savedNotesNote {
-  @apply flex justify-between px-2 py-5 border-y cursor-pointer;
+  @apply flex justify-between px-2 py-5 cursor-pointer;
 }
 
 .home_savedNotesNoteSelected {
-  @apply flex justify-between px-2 py-5 border-y bg-gray-200 cursor-pointer;
+  @apply flex justify-between px-2 py-5 bg-gray-200 cursor-pointer;
 }
 
 .home_savedNoteDetails {
