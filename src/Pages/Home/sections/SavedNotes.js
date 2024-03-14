@@ -22,7 +22,7 @@ export const ProjectItem = ({ id, handleClick, selectedProject, height = 'h-10' 
       <div className={`flex items-center ${height}`}>
         <ThreeDots styles={`my-auto text-gray-300 ${height}`} />
         <div className={styles.home_savedNoteDetails}>
-          <h3>{projectData?.name ?? 'Project'}</h3>
+          <h3>{projectData?.name ?? 'Default project'}</h3>
         </div>
       </div>
     </div>

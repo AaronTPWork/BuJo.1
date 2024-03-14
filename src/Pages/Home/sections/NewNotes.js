@@ -6,6 +6,7 @@ import { BulletIcon } from './components/BulletIcon';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createJournal, editJournal } from '../../../Services/Journal';
 import { todayDate, useGlobalValues } from '../../../Stores/GlobalValues';
+import { EditNoteModal } from './modals/EditNoteModal';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -22,7 +23,7 @@ function debounce(func, delay) {
   };
 }
 
-const InputArea = ({ value, handleInput, note, index }) => {
+export const InputArea = ({ value, handleInput, note, index }) => {
   const [localValue, setLocalValue] = useState('');
   useEffect(() => {
     setLocalValue(note.text_stream);
@@ -30,6 +31,7 @@ const InputArea = ({ value, handleInput, note, index }) => {
 
   return (
     <input
+      // style={{ height: '30px' }}
       type="text"
       className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap"
       placeholder="Type your note here..."
@@ -56,6 +58,7 @@ const NoteWithAnnotations = () => {
 
   const { notes } = useDailyJournalNotes(selectedDate);
   const [currentNote, setcurrentNote] = useState();
+  const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
 
   const filteredNotesByProjectStream = notes?.filter(
@@ -221,7 +224,7 @@ const NoteWithAnnotations = () => {
                       index={index}
                     />
                   </div>
-                  <div className="w-[7%] h-full flex justify-center items-center ">
+                  <div className="w-[9%] h-full flex justify-center items-center ">
                     <BulletIcon
                       refName={'ref_bullet'}
                       note={note}
@@ -234,6 +237,17 @@ const NoteWithAnnotations = () => {
                   <div className="flex flex-col w-full  pl-1">
                     <InputArea handleInput={handleInput} note={note} index={index} />
                   </div>
+                  {note.id && (
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setcurrentNote(note);
+                        setshowModal(true);
+                      }}
+                    >
+                      <PencilPage styles={'h-7 my-auto'} />
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -255,6 +269,16 @@ const NoteWithAnnotations = () => {
           selectIcon={selectSecondaryIcon}
           refName={'ref_context'}
           getIconName={(ref) => `${ref.name}`}
+        />
+      )}
+      {showModal && (
+        <EditNoteModal
+          currentNote={currentNote}
+          isModalOpen={showModal}
+          closeModal={() => {
+            setcurrentNote(null);
+            setshowModal(false);
+          }}
         />
       )}
     </div>

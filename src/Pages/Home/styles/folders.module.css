@@ -19,7 +19,8 @@
 }
 
 .foldersModal {
-  @apply flex flex-col bg-white border border-black rounded-xl;
+  @apply flex flex-col bg-white border border-black rounded-xl h-full overflow-scroll scrollbar-hide;
+  @layer scrollbar-hide;
 }
 
 .foldersModalHeader {
@@ -27,9 +28,18 @@
 }
 
 .foldersModalForm {
-  @apply w-3/4 p-10 mx-auto text-center;
+  @apply w-3/4 p-10 mx-auto text-center pb-40;
 }
 
 .foldersModalSubmitButton {
   @apply p-2 mx-auto mt-5 text-2xl bg-gray-300 rounded-xl;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
