@@ -19,11 +19,19 @@ export const ProjectItem = ({ id, handleClick, selectedProject, height = 'h-10' 
       }
       onClick={() => handleClick && handleClick(projectData)}
     >
-      <div className={`flex items-center ${height}`}>
-        <ThreeDots styles={`my-auto text-gray-300 ${height}`} />
-        <div className={styles.home_savedNoteDetails}>
-          <h3>{projectData?.name ?? 'Default project'}</h3>
+      <div className={`flex flex-row w-full justify-between items-center ${height}`}>
+        <div className="flex items-center">
+          <ThreeDots styles={`my-auto text-gray-300 ${height}`} />
+          <div className={styles.home_savedNoteDetails}>
+            <h3 className="capitalize">{projectData?.name ?? 'Default project'}</h3>
+          </div>
         </div>
+        <div
+          className={`h-full w-7 rounded-full`}
+          style={{
+            backgroundColor: projectData?.color ?? 'gray',
+          }}
+        />
       </div>
     </div>
   );
