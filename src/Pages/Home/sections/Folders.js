@@ -33,12 +33,21 @@ export const Folders = () => {
         journals.filter((journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === date.value)
           .length
     );
-    return filteredDates.map((element) => ({
+    const returningDates = filteredDates.map((element) => ({
       ...element,
       recordCount: journals.filter(
         (journal) => journal.date_created && format(journal.date_created, 'yyyy-MM-dd') === element.value
       ).length,
     }));
+    if (returningDates.find((date) => date.label === 'Today')) return returningDates;
+
+    return [
+      ...returningDates,
+      {
+        label: 'Today',
+        value: format(new Date(), 'yyyy-MM-dd'),
+      },
+    ];
   }, [dates, journals]);
 
   return (
