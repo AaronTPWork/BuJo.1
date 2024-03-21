@@ -30,8 +30,8 @@ export const InputArea = ({ value, handleInput, note, index }) => {
   }, [note.text_stream]);
 
   return (
-    <input
-      // style={{ height: '30px' }}
+    <textarea
+      style={{ height: '30px' }}
       type="text"
       className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap"
       placeholder="Type your note here..."
@@ -45,6 +45,8 @@ export const InputArea = ({ value, handleInput, note, index }) => {
 const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
   const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
+  const [previousKeyPress, setPreviousKeyPress] = useState('');
+
   const [floatingMenuPosition, setFloatingMenuPosition] = useState({
     x: 0,
     y: 0,
@@ -115,6 +117,7 @@ const NoteWithAnnotations = () => {
   const handleInput = (e, note, index, value) => {
     const newText = value;
     if (e.key === 'Enter' && !e.shiftKey) {
+      // if (previousKeyPress === 'Enter') {
       if (!note.id) {
         // debounce(() => {
         //   const newNote = {
@@ -131,7 +134,6 @@ const NoteWithAnnotations = () => {
           user_id: selectedUserId,
           text_stream: newText,
         };
-        console.log('🚀 ~ handleInput ~ note:', newNote);
         if (selectedProject) newNote.project_stream = selectedProject;
         createNote(newNote);
       } else {
@@ -143,6 +145,10 @@ const NoteWithAnnotations = () => {
           500
         );
       }
+      //   setPreviousKeyPress('');
+      // } else {
+      //   setPreviousKeyPress(e.key);
+      // }
     }
   };
 
