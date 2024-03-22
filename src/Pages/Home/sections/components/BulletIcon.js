@@ -12,7 +12,7 @@ export const BulletIcon = ({ refName, selectedIconId, getIconName, handleClick, 
         getIconComponent(getIconName(data?.data[0]), 'h-[18px] mx-auto')
       ) : (
         <div className="opacity-25 hover:opacity-100">
-          <CirclePlus styles={'mx-auto'} />
+          <CirclePlus styles={'h-[18px] mx-auto'} />
         </div>
       )}
     </button>

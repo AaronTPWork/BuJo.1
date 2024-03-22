@@ -33,14 +33,10 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
   return (
     <>
       <Modal isModalOpen={isModalOpen} closeModal={closeModal} maxWidth="1000px">
-        <div className="flex justify-end">
-          <button className="text-blue-900 -top-10 z-50 right-10 hover:text-blue-400" onClick={closeModal}>
-            Close X
-          </button>
-        </div>
+        <div className="flex justify-end"></div>
         <div className="bg-white rounded-lg">
-          <div className="border-b flex flex-row justify-between p-5">
-            <div className="w-full pr-10">
+          <div className="border-b flex flex-row justify-between px-2 py-5 md:p-5">
+            <div className="w-4/6 md:w-full md:pr-10">
               <form onSubmit={handleSubmit}>
                 <TextInput
                   handleChange={(e) => setLocalSearchValue(e.target.value)}
@@ -48,7 +44,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                   name="search"
                   label=""
                   value={localSearchValue}
-                  inputClassname="text-4xl border-none focus:ring-0 ring-0 outline-none	"
+                  inputClassname="text-lg md:text-4xl border-none focus:ring-0 ring-0 outline-none	"
                 />
               </form>
             </div>
@@ -57,7 +53,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               className="flex flex-row items-center py-1 px-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
             >
               <SearchIcon styles={'w-4 my-auto text-[#7C7C7C]'} />
-              <h3 className="text-[#7C7C7C] ml-1">Search</h3>
+              <h3 className="text-[#7C7C7C] ml-1 text-sm md:text-md">Search</h3>
             </button>
           </div>
           {searches?.length === 0 ? (
@@ -65,12 +61,12 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               <h3 className="text-[#7C7C7C]">Search by date, project or term to see results.</h3>
             </div>
           ) : (
-            <div className="flex flex-col h-80 overflow-scroll">
+            <div className="flex flex-col h-80 overflow-y-scroll">
               {searches.map((search, idx) => {
                 return (
                   <div
                     key={`search-${idx}`}
-                    className="flex flex-row w-full border-b cursor-pointer hover:bg-gray-100"
+                    className="flex flex-col md:flex-row py-4 md:py-0 w-full border-b cursor-pointer items-center hover:bg-gray-100"
                     onClick={() => {
                       changeselectedUserId(search.user_id ?? '0');
                       changeselectedDate(format(new Date(search.date_created), 'yyyy-MM-dd'));
@@ -79,14 +75,14 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                       closeModal();
                     }}
                   >
-                    <div className="w-1/6 border-r text-center flex items-center justify-center">
-                      <h3 className="font-bold">{format(search.date_created, 'dd.MM.yyyy')}</h3>
+                    <div className="w-full md:w-1/6 md:border-r text-center flex items-center justify-center">
+                      <h3 className="text-xs md:text-lg font-bold">{format(search.date_created, 'dd.MM.yyyy')}</h3>
                     </div>
-                    <div className="w-1/3 border-r border-b border-gray-300 bg-gray-200">
-                      <ProjectItem isSelected height="h-1" id={search.project_stream} />
+                    <div className="w-full md:w-1/3 border-r border-b md:py-0 border-gray-300 bg-gray-200 flex items-center">
+                      <ProjectItem isSelected height="h-5" id={search.project_stream} />
                     </div>
-                    <div className="w-3/6 px-3 flex items-center">
-                      <h3>{search.text_stream}</h3>
+                    <div className=" px-3 flex items-center">
+                      <h3 className="text-xs md:text-lg">{search.text_stream}</h3>
                     </div>
                   </div>
                 );

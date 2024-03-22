@@ -21,7 +21,7 @@ export const ProjectItem = ({ id, handleClick, selectedProject, height = 'h-10' 
     >
       <div className={`flex flex-row w-full justify-between items-center ${height}`}>
         <div className="flex items-center">
-          <ThreeDots styles={`my-auto text-gray-300 ${height}`} />
+          <ThreeDots styles={`my-auto text-gray-300 h-6 md:${height}`} />
           <div className={styles.home_savedNoteDetails}>
             <h3 className="capitalize">{projectData?.name ?? 'Default project'}</h3>
           </div>
@@ -64,7 +64,7 @@ export const SavedNotes = () => {
             <TileIcon styles={'h-10 my-auto'} />
           </div>
         </div>
-        <div className="overflow-scroll h-[85%]">
+        <div className="overflow-scroll h-full md:h-[85%]">
           {uniqueProjectStreams?.map((projectId, idx) => {
             return (
               <div className="border-y" key={`project-idx-${projectId}`}>

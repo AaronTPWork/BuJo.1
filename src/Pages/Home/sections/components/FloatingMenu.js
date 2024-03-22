@@ -80,7 +80,7 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
 
   return (
     <div
-      className="absolute z-20 flex flex-col w-56 p-2 bg-gray-100 border border-gray-400 rounded"
+      className="absolute z-50 h-1/2  flex flex-col w-56 p-2 bg-gray-100 border border-gray-400 rounded"
       style={{
         top: `${floatingMenuPosition.y + 30}px`,
         left: `${floatingMenuPosition.x + 12}px`,
@@ -90,7 +90,7 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
         &times;
       </button>
       <p className="pb-2 mx-auto text-sm">ADD A TAG</p>
-      <div className="flex flex-col items-start mt-2">
+      <div className="flex flex-col items-start mt-2 overflow-scroll">
         {data &&
           data?.map((ref, idx) => {
             return (

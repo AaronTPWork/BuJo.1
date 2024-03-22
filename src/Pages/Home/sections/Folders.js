@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import styles from '../styles/folders.module.css';
 import { eachDayOfInterval, format, isSameDay } from 'date-fns';

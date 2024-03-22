@@ -21,7 +21,7 @@ export const Home = () => {
     <>
       <div className={styles.home}>
         <div className={styles.home_header}>
-          <div className="flex flex-row py-2">
+          <div className="flex flex-row py-2 overflow-scroll md:overflow-hidden scrollbar-hide">
             {data?.map((user) => {
               const isSelected = user.id === selectedUserId;
               return (

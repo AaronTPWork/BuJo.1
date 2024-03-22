@@ -31,9 +31,8 @@ export const InputArea = ({ value, handleInput, note, index }) => {
 
   return (
     <textarea
-      style={{ height: '30px' }}
       type="text"
-      className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap"
+      className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8"
       placeholder="Type your note here..."
       value={localValue ?? ''}
       onChange={(e) => setLocalValue(e.target.value)}
@@ -93,7 +92,7 @@ const NoteWithAnnotations = () => {
     setcurrentNote(note);
     const buttonPosition = event.target.getBoundingClientRect();
     setShowSecondaryFloatingMenu(false);
-    setFloatingMenuPosition({ x: buttonPosition.x, y: buttonPosition.y });
+    setFloatingMenuPosition({ x: buttonPosition.x, y: buttonPosition.y - 165 });
     setShowPrimaryFloatingMenu(true);
   };
 
@@ -101,7 +100,7 @@ const NoteWithAnnotations = () => {
     setcurrentNote(note);
     const buttonPosition = event.target.getBoundingClientRect();
     setShowPrimaryFloatingMenu(false);
-    setFloatingMenuPosition({ x: buttonPosition.x, y: buttonPosition.y });
+    setFloatingMenuPosition({ x: buttonPosition.x, y: buttonPosition.y - 165 });
     setShowSecondaryFloatingMenu(true);
   };
 
@@ -190,16 +189,17 @@ const NoteWithAnnotations = () => {
   };
 
   return (
-    <div className="flex flex-col w-3/4 border-x">
-      <div className="flex justify-between h-20 border">
-        <PencilPage styles={'h-10 my-auto ml-5'} />
+    <div className="flex flex-col w-full h-1/2 md:h-screen md:w-3/4 border-x">
+      {/* <div className="hidden md:flex justify-between h-20 border"> */}
+      <div className="fixed bottom-0 w-full z-50 bg-white md:relative flex justify-between h-14 md:h-20 border">
+        <PencilPage styles={'h-6 md:h-10 my-auto ml-5'} />
         <div className="flex gap-x-5">
           <div className="flex px-5 my-auto border-r h-fit">
-            <LockIcon styles={'w-10 my-auto'} />
+            <LockIcon styles={'h-6 md:h-10 w-10 my-auto'} />
           </div>
 
           <button className="">
-            <DownloadIcon styles={'h-10'} />
+            <DownloadIcon styles={'h-6 md:h-10'} />
           </button>
           <div
             onClick={() => {
@@ -207,20 +207,18 @@ const NoteWithAnnotations = () => {
             }}
             className="flex px-5 my-auto border-l h-fit cursor-pointer"
           >
-            <SearchIcon styles={'w-10 my-auto'} />
+            <SearchIcon styles={'h-6 md:h-10 w-10 my-auto'} />
           </div>
         </div>
       </div>
-      <div className="flex h-[85%] overflow-scroll">
+      <div className="flex md:h-[85%] overflow-scroll">
         <div className="flex flex-col h-full w-full pt-1 border-r border-r-[#e5e7eb] relative">
-          <div className="border-r border-r-[#e5e7eb] w-[6%] h-[100%] absolute" />
-          <div className="border-r border-r-[#e5e7eb] w-[13%] h-full absolute" />
           {selectedUserId &&
             selectedUserId.length > 0 &&
             [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
               return (
                 <div key={`note-detail-${index}`} className="flex w-full items-start">
-                  <div className="w-[7%] h-full flex justify-center items-center ">
+                  <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
                     <BulletIcon
                       refName={'ref_context'}
                       note={note}
@@ -230,7 +228,7 @@ const NoteWithAnnotations = () => {
                       index={index}
                     />
                   </div>
-                  <div className="w-[9%] h-full flex justify-center items-center ">
+                  <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
                     <BulletIcon
                       refName={'ref_bullet'}
                       note={note}

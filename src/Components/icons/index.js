@@ -203,7 +203,7 @@ export const CirclePlus = ({ styles }) => {
     <>
       <svg
         className={styles}
-        width="24"
+        width="18"
         height="24"
         viewBox="0 0 24 24"
         stroke-width="2"

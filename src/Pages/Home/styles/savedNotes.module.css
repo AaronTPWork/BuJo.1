@@ -1,9 +1,9 @@
 .home_savedNotes {
-  @apply w-1/2 border-gray-300 border-x;
+  @apply scrollbar-hide overflow-y-scroll h-1/6 md:h-screen w-full md:w-1/2 border-gray-300 border-x;
 }
 
 .home_savedNotesHeader {
-  @apply flex h-20 border-gray-300 border-y;
+  @apply md:flex hidden md:h-20 border-gray-300 border-y;
 }
 
 .home_savedNotesListIcon {
@@ -15,11 +15,11 @@
 }
 
 .home_savedNotesNote {
-  @apply flex justify-between px-2 py-5 cursor-pointer;
+  @apply flex justify-between px-2 py-2 md:py-5 cursor-pointer flex-1;
 }
 
 .home_savedNotesNoteSelected {
-  @apply flex justify-between px-2 py-5 bg-gray-200 cursor-pointer;
+  @apply flex justify-between px-2 py-2 md:py-5 bg-gray-200 flex-1 cursor-pointer;
 }
 
 .home_savedNoteDetails {
@@ -27,7 +27,7 @@
 }
 
 .home_savedNoteDetails h3 {
-  @apply text-lg font-bold;
+  @apply text-sm md:text-lg font-bold;
 }
 
 .home_savedNoteDetails p {
@@ -36,4 +36,13 @@
 
 .home_savedNoteDate {
   @apply my-auto mr-4 text-gray-500;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

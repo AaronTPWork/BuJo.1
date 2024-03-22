@@ -3,11 +3,11 @@
 }
 
 .home_header {
-  @apply bg-white;
+  @apply bg-white w-full;
 }
 
 .home_app {
-  @apply flex h-full;
+  @apply flex flex-col md:flex-row h-full;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
