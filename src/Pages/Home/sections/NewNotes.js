@@ -33,6 +33,9 @@ export const InputArea = ({ value, handleInput, note, index }) => {
     <textarea
       type="text"
       className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8"
+      style={{
+        resize: 'none',
+      }}
       placeholder="Type your note here..."
       value={localValue ?? ''}
       onChange={(e) => setLocalValue(e.target.value)}
@@ -217,7 +220,7 @@ const NoteWithAnnotations = () => {
             selectedUserId.length > 0 &&
             [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
               return (
-                <div key={`note-detail-${index}`} className="flex w-full items-start">
+                <div key={`note-detail-${index}`} className="flex w-full items-center">
                   <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
                     <BulletIcon
                       refName={'ref_context'}
