@@ -12,6 +12,17 @@ export const useJournalRefs = (refName) => {
     isLoading: query?.isLoading,
   };
 };
+export const useBulletIcons = (selectedIcon) => {
+  const query = useQuery({
+    queryKey: ['dynamic-icon', selectedIcon],
+    queryFn: () => axiosInstance.get(`/journal/journal_icon${selectedIcon ? `?icon=${selectedIcon}` : ''}`),
+  });
+
+  return {
+    data: query && query.data && query.data.data ? Object.values(query?.data?.data) : [],
+    isLoading: query?.isLoading,
+  };
+};
 
 export const useSingleJournalRef = (refName, id) => {
   const query = useQuery({

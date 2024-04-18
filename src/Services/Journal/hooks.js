@@ -10,10 +10,13 @@ export const useDailyJournals = () => {
   return { journals: data && data.data ? Object.values(data?.data) : [], isLoading };
 };
 
-export const useDailyJournalNotes = (date) => {
+export const useDailyJournalNotes = (date, search = 'no completed') => {
   const { data, isLoading, isRefetching } = useQuery({
-    queryKey: ['journals', date],
-    queryFn: () => axiosInstance.get(`/journal/daily_journal_date?date_created=${date}`),
+    queryKey: ['journals', date, search],
+    queryFn: () =>
+      axiosInstance.get(
+        `/journal/daily_journal_date_task?date_created=${date}${search !== 'all' ? `&search=${search}` : ''}`
+      ),
   });
 
   return { notes: data && data.data ? Object.values(data?.data) : [], isLoading, isRefetching };

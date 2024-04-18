@@ -14,8 +14,10 @@ const defaultValues = {
   selectedUserId: '',
   selectedDate: todayDate,
   selectedProject: '',
+  selectedProjectName: '',
   showSearch: false,
   currentSearch: '',
+  currentFilter: '',
   selectedNote: {},
 };
 
@@ -36,6 +38,9 @@ export const useGlobalValues = createSelectors(
           changeselectedProject(project) {
             set({ selectedProject: project });
           },
+          changeselectedProjectName(project) {
+            set({ selectedProjectName: project });
+          },
           hydrate() {
             resolveHydrationValue(true);
           },
@@ -50,6 +55,9 @@ export const useGlobalValues = createSelectors(
           },
           setCurrentSearch(search) {
             set({ currentSearch: search });
+          },
+          setCurrentFilter(filter) {
+            set({ currentFilter: filter });
           },
           setSelectedNote(note) {
             set({ selectedNote: note });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PencilPage, DownloadIcon, LockIcon, SearchIcon } from '../../../Components/icons';
+import { PencilPage, DownloadIcon, SearchIcon } from '../../../Components/icons';
 import { FloatingMenu } from './components/FloatingMenu';
 import { useDailyJournalNotes } from '../../../Services/Journal/hooks';
 import { BulletIcon } from './components/BulletIcon';
@@ -7,6 +7,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createJournal, editJournal } from '../../../Services/Journal';
 import { todayDate, useGlobalValues } from '../../../Stores/GlobalValues';
 import { EditNoteModal } from './modals/EditNoteModal';
+import { ProjectModal } from './modals/ProjectModal';
+import { migrateNote } from '../../../Services/Journal/api';
+import Select from 'react-select';
+import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -44,10 +48,17 @@ export const InputArea = ({ value, handleInput, note, index }) => {
   );
 };
 
+const options = [
+  { value: 'all', label: 'All' },
+  { value: 'migrated', label: 'Migrated' },
+  { value: 'no completed', label: 'No completed' },
+];
+
 const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
   const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
   const [previousKeyPress, setPreviousKeyPress] = useState('');
+  const [showProjectModal, setShowProjectModal] = useState(false);
 
   const [floatingMenuPosition, setFloatingMenuPosition] = useState({
     x: 0,
@@ -57,10 +68,12 @@ const NoteWithAnnotations = () => {
     selectedDate,
     selectedProject,
     selectedUserId,
-    actions: { showSearch },
+    currentFilter,
+    selectedProjectName,
+    actions: { showSearch, setCurrentFilter },
   } = useGlobalValues();
 
-  const { notes } = useDailyJournalNotes(selectedDate);
+  const { notes } = useDailyJournalNotes(selectedDate, currentFilter);
   const [currentNote, setcurrentNote] = useState();
   const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
@@ -86,6 +99,12 @@ const NoteWithAnnotations = () => {
   });
   const { mutate: editNote } = useMutation({
     mutationFn: editJournal,
+    onSettled: () => {
+      invalidateQueries();
+    },
+  });
+  const { mutate: migrate } = useMutation({
+    mutationFn: migrateNote,
     onSettled: () => {
       invalidateQueries();
     },
@@ -154,7 +173,9 @@ const NoteWithAnnotations = () => {
     }
   };
 
-  const selectPrimaryIcon = (iconId) => {
+  const selectPrimaryIcon = (iconId, iconRef) => {
+    console.log('🚀 ~ selectPrimaryIcon ~ iconId:', iconId);
+    console.log('🚀 ~ selectPrimaryIcon ~ currentNote:', currentNote);
     if (!currentNote.id) {
       const newNote = {
         date_created: selectedDate ?? todayDate,
@@ -168,6 +189,9 @@ const NoteWithAnnotations = () => {
         ...currentNote,
         bullet_stream: iconId,
       });
+    }
+    if (iconRef && iconRef.state === 'migrated' && currentNote) {
+      migrate({ noteId: currentNote.id });
     }
     setShowPrimaryFloatingMenu(false);
   };
@@ -195,10 +219,26 @@ const NoteWithAnnotations = () => {
     <div className="flex flex-col w-full h-1/2 md:h-screen md:w-3/4 border-x">
       {/* <div className="hidden md:flex justify-between h-20 border"> */}
       <div className="fixed bottom-0 w-full z-50 bg-white md:relative flex justify-between h-14 md:h-20 border">
-        <PencilPage styles={'h-6 md:h-10 my-auto ml-5'} />
+        <div
+          className="cursor-pointer flex items-center"
+          onClick={() => {
+            setShowProjectModal(true);
+          }}
+        >
+          <PencilPage styles={'h-6 md:h-10 my-auto ml-5'} />
+        </div>
         <div className="flex gap-x-5">
-          <div className="flex px-5 my-auto border-r h-fit">
-            <LockIcon styles={'h-6 md:h-10 w-10 my-auto'} />
+          <div className="flex px-5 my-auto border-r h-fit"></div>
+          <div className="px-5 w-32 md:w-48 my-auto border-r">
+            <Select
+              value={options.find((option) => option.value === currentFilter)}
+              options={options}
+              form="project_stream"
+              onChange={(vals) => {
+                setCurrentFilter(vals.value);
+              }}
+              menuPortalTarget={null}
+            />
           </div>
 
           <button className="">
@@ -261,10 +301,11 @@ const NoteWithAnnotations = () => {
         </div>
       </div>
       {showPrimaryFloatingMenu && (
-        <FloatingMenu
+        <DynamicFloatingMenu
           floatingMenuPosition={floatingMenuPosition}
           closeMenu={closeMenu}
           selectIcon={selectPrimaryIcon}
+          selectedIcon={currentNote?.selectedIconRef}
           refName={'ref_bullet'}
           getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
         />
@@ -285,6 +326,14 @@ const NoteWithAnnotations = () => {
           closeModal={() => {
             setcurrentNote(null);
             setshowModal(false);
+          }}
+        />
+      )}
+      {showProjectModal && (
+        <ProjectModal
+          isModalOpen={showProjectModal}
+          closeModal={() => {
+            setShowProjectModal(false);
           }}
         />
       )}

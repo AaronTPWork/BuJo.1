@@ -11,7 +11,7 @@
 }
 
 .home_savedNotesTileIcon {
-  @apply flex h-full px-5 w-fit;
+  @apply flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer;
 }
 
 .home_savedNotesNote {
