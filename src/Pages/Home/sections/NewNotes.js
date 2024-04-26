@@ -50,14 +50,13 @@ export const InputArea = ({ value, handleInput, note, index }) => {
 
 const options = [
   { value: 'all', label: 'All' },
-  { value: 'migrated', label: 'Migrated' },
+  // { value: 'migrated', label: 'Migrated' },
   { value: 'no completed', label: 'No completed' },
 ];
 
 const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
   const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
-  const [previousKeyPress, setPreviousKeyPress] = useState('');
   const [showProjectModal, setShowProjectModal] = useState(false);
 
   const [floatingMenuPosition, setFloatingMenuPosition] = useState({
@@ -69,7 +68,6 @@ const NoteWithAnnotations = () => {
     selectedProject,
     selectedUserId,
     currentFilter,
-    selectedProjectName,
     actions: { showSearch, setCurrentFilter },
   } = useGlobalValues();
 
@@ -174,8 +172,6 @@ const NoteWithAnnotations = () => {
   };
 
   const selectPrimaryIcon = (iconId, iconRef) => {
-    console.log('🚀 ~ selectPrimaryIcon ~ iconId:', iconId);
-    console.log('🚀 ~ selectPrimaryIcon ~ currentNote:', currentNote);
     if (!currentNote.id) {
       const newNote = {
         date_created: selectedDate ?? todayDate,
@@ -225,7 +221,7 @@ const NoteWithAnnotations = () => {
             setShowProjectModal(true);
           }}
         >
-          <PencilPage styles={'h-6 md:h-10 my-auto ml-5'} />
+          <PencilPage styles={'h-6 md:h-10 my-auto ml-5 md:hidden'} />
         </div>
         <div className="flex gap-x-5">
           <div className="flex px-5 my-auto border-r h-fit"></div>
