@@ -158,7 +158,8 @@ const NoteWithAnnotations = () => {
       } else {
         debounce(
           editNote({
-            ...note,
+            // ...note,
+            id: note.id,
             text_stream: newText,
           }),
           500
@@ -172,6 +173,7 @@ const NoteWithAnnotations = () => {
   };
 
   const selectPrimaryIcon = (iconId, iconRef) => {
+    console.log('🚀 ~ selectPrimaryIcon ~ iconId:', iconId);
     if (!currentNote.id) {
       const newNote = {
         date_created: selectedDate ?? todayDate,
@@ -182,7 +184,8 @@ const NoteWithAnnotations = () => {
       createNote(newNote);
     } else {
       editNote({
-        ...currentNote,
+        // ...currentNote,
+        id: currentNote.id,
         bullet_stream: iconId,
       });
     }
@@ -204,7 +207,8 @@ const NoteWithAnnotations = () => {
       createNote(newNote);
     } else {
       editNote({
-        ...currentNote,
+        // ...currentNote,
+        id: currentNote.id,
         context_stream: iconId ?? '0',
       });
     }
