@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { PencilPage, DownloadIcon, SearchIcon } from '../../../Components/icons';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { PencilPage, SearchIcon } from '../../../Components/icons';
 import { FloatingMenu } from './components/FloatingMenu';
 import { useDailyJournalNotes } from '../../../Services/Journal/hooks';
 import { BulletIcon } from './components/BulletIcon';
@@ -9,7 +9,6 @@ import { todayDate, useGlobalValues } from '../../../Stores/GlobalValues';
 import { EditNoteModal } from './modals/EditNoteModal';
 import { ProjectModal } from './modals/ProjectModal';
 import { migrateNote } from '../../../Services/Journal/api';
-import Select from 'react-select';
 import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 
 function debounce(func, delay) {
@@ -27,7 +26,7 @@ function debounce(func, delay) {
   };
 }
 
-export const InputArea = ({ value, handleInput, note, index }) => {
+export const InputArea = ({ value, handleInput, note, index, ...props }) => {
   const [localValue, setLocalValue] = useState('');
   useEffect(() => {
     setLocalValue(note.text_stream);
@@ -35,6 +34,7 @@ export const InputArea = ({ value, handleInput, note, index }) => {
 
   return (
     <textarea
+      {...props}
       type="text"
       className="border-none outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8"
       style={{
@@ -48,16 +48,11 @@ export const InputArea = ({ value, handleInput, note, index }) => {
   );
 };
 
-const options = [
-  { value: 'all', label: 'All' },
-  // { value: 'migrated', label: 'Migrated' },
-  { value: 'no completed', label: 'No completed' },
-];
-
 const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
   const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
+  const newNoteRef = React.createRef(null);
 
   const [floatingMenuPosition, setFloatingMenuPosition] = useState({
     x: 0,
@@ -67,11 +62,10 @@ const NoteWithAnnotations = () => {
     selectedDate,
     selectedProject,
     selectedUserId,
-    currentFilter,
-    actions: { showSearch, setCurrentFilter },
+    actions: { showSearch },
   } = useGlobalValues();
 
-  const { notes } = useDailyJournalNotes(selectedDate, currentFilter);
+  const { notes } = useDailyJournalNotes(selectedDate);
   const [currentNote, setcurrentNote] = useState();
   const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
@@ -79,6 +73,15 @@ const NoteWithAnnotations = () => {
   const filteredNotesByProjectStream = notes?.filter(
     (note) => note.project_stream === selectedProject && note.user_id === selectedUserId
   );
+
+  useLayoutEffect(() => {
+    if (!newNoteRef.current) {
+      const lastItem = filteredNotesByProjectStream.length;
+      newNoteRef.current = document.getElementById(`input-ref-${lastItem}`);
+      newNoteRef.current.focus();
+    }
+    return () => {};
+  }, [filteredNotesByProjectStream]);
 
   const invalidateQueries = () => {
     qClient.invalidateQueries({
@@ -136,18 +139,9 @@ const NoteWithAnnotations = () => {
   const handleInput = (e, note, index, value) => {
     const newText = value;
     if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       // if (previousKeyPress === 'Enter') {
       if (!note.id) {
-        // debounce(() => {
-        //   const newNote = {
-        //     date_created: selectedDate,
-        //     user_id: selectedUserId,
-        //     text_stream: newText,
-        //   };
-        //   console.log('🚀 ~ handleInput ~ note:', newNote);
-        //   if (selectedProject) newNote.project_stream = selectedProject;
-        //   return createNote(newNote);
-        // }, 500);
         const newNote = {
           date_created: selectedDate ?? todayDate,
           user_id: selectedUserId,
@@ -165,6 +159,11 @@ const NoteWithAnnotations = () => {
           500
         );
       }
+      const nextNoteIdx = index + 1;
+      if (nextNoteIdx <= filteredNotesByProjectStream.length) {
+        newNoteRef.current = document.getElementById(`input-ref-${index + 1}`);
+        newNoteRef.current.focus();
+      }
       //   setPreviousKeyPress('');
       // } else {
       //   setPreviousKeyPress(e.key);
@@ -173,7 +172,6 @@ const NoteWithAnnotations = () => {
   };
 
   const selectPrimaryIcon = (iconId, iconRef) => {
-    console.log('🚀 ~ selectPrimaryIcon ~ iconId:', iconId);
     if (!currentNote.id) {
       const newNote = {
         date_created: selectedDate ?? todayDate,
@@ -229,21 +227,7 @@ const NoteWithAnnotations = () => {
         </div>
         <div className="flex gap-x-5">
           <div className="flex px-5 my-auto border-r h-fit"></div>
-          <div className="px-5 w-32 md:w-48 my-auto border-r">
-            <Select
-              value={options.find((option) => option.value === currentFilter)}
-              options={options}
-              form="project_stream"
-              onChange={(vals) => {
-                setCurrentFilter(vals.value);
-              }}
-              menuPortalTarget={null}
-            />
-          </div>
 
-          <button className="">
-            <DownloadIcon styles={'h-6 md:h-10'} />
-          </button>
           <div
             onClick={() => {
               showSearch();
@@ -281,8 +265,14 @@ const NoteWithAnnotations = () => {
                       index={index}
                     />
                   </div>
-                  <div className="flex flex-col w-full  pl-1">
-                    <InputArea handleInput={handleInput} note={note} index={index} />
+                  <div className="flex flex-col w-full pl-1">
+                    <InputArea
+                      handleInput={handleInput}
+                      note={note}
+                      index={index}
+                      ref={newNoteRef}
+                      id={`input-ref-${index}`}
+                    />
                   </div>
                   {note.id && (
                     <div

@@ -18,7 +18,7 @@ export function Modal({ isModalOpen, closeModal, maxWidth, children }) {
       background: 'transparent',
       maxHeight: '100vh',
       transform: 'translate(-50%, -50%)',
-      overflow: 'auto',
+      // overflow: 'auto',
       borderRadius: '10px',
     },
   };

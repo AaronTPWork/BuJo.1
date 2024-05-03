@@ -78,7 +78,6 @@ export const getIconComponent = (iconName, styles) => {
 
 export const DynamicFloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, selectedIcon, getIconName }) => {
   const { data } = useBulletIcons(selectedIcon);
-  console.log('🚀 ~ DynamicFloatingMenu ~ data:', data);
 
   return (
     <div
@@ -96,7 +95,6 @@ export const DynamicFloatingMenu = ({ floatingMenuPosition, closeMenu, selectIco
         {data &&
           data?.length > 0 &&
           data?.map((ref, idx) => {
-            console.log('🚀 ~ DynamicFloatingMenu ~ ref:', ref);
             return (
               <button
                 key={`icon_button_${idx}`}

@@ -19,8 +19,6 @@ export const useSingleUser = (id) => {
     queryFn: () => axiosInstance.get(`/journal/users${id ? `?id=${id}` : ''}`),
   });
 
-  console.log('query', query.data);
-
   return {
     data: query && query.data ? query.data : [],
     isLoading: query?.isLoading,

@@ -5,12 +5,27 @@ import { useDailyJournalsBySearch } from '../../../../Services/Journal/hooks';
 import { useGlobalValues } from '../../../../Stores/GlobalValues';
 import { format } from 'date-fns';
 import { ProjectItem } from '../SavedNotes';
+import Select from 'react-select';
+
+const options = [
+  { value: 'all', label: 'All' },
+  // { value: 'migrated', label: 'Migrated' },
+  { value: 'no completed', label: 'Incomplete' },
+];
 
 export const SearchModal = ({ isModalOpen, closeModal }) => {
   const {
     currentSearch,
     selectedUserId,
-    actions: { setCurrentSearch, setSelectedNote, changeselectedUserId, changeselectedDate, changeselectedProject },
+    currentFilter,
+    actions: {
+      setCurrentSearch,
+      setSelectedNote,
+      changeselectedUserId,
+      changeselectedDate,
+      changeselectedProject,
+      setCurrentFilter,
+    },
   } = useGlobalValues();
 
   const [localSearchValue, setLocalSearchValue] = useState(currentSearch);
@@ -19,12 +34,14 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCurrentSearch(localSearchValue);
-    searchValue(localSearchValue, selectedUserId);
+    const filterSearch = currentFilter === 'all' ? localSearchValue : currentFilter;
+    searchValue(filterSearch, selectedUserId);
   };
 
   useEffect(() => {
     if (currentSearch === '') return;
-    searchValue(currentSearch, selectedUserId);
+    const filterSearch = currentFilter === 'all' ? currentSearch : currentFilter;
+    searchValue(filterSearch, selectedUserId);
 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,6 +64,27 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                   inputClassname="text-lg md:text-4xl border-none focus:ring-0 ring-0 outline-none	"
                 />
               </form>
+            </div>
+            <div className="px-5 w-72 my-auto border-r mr-5">
+              <Select
+                value={options.find((option) => option.value === currentFilter)}
+                options={options}
+                form="project_stream"
+                onChange={(vals) => {
+                  let filter = vals.value;
+                  if (vals.value === 'no completed') {
+                    filter = 'no completed';
+                    setCurrentSearch('');
+                    setLocalSearchValue('');
+                  } else {
+                    filter = localSearchValue;
+                  }
+                  searchValue(filter, selectedUserId);
+                  setCurrentFilter(vals.value);
+                }}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                menuPortalTarget={document.body}
+              />
             </div>
             <button
               onClick={handleSubmit}
@@ -81,7 +119,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                     <div className="w-full md:w-1/3 border-r border-b md:py-0 border-gray-300 bg-gray-200 flex items-center">
                       <ProjectItem isSelected height="h-5" id={search.project_stream} />
                     </div>
-                    <div className=" px-3 flex items-center">
+                    <div className="flex-1 px-3 flex items-center">
                       <h3 className="text-xs md:text-lg">{search.text_stream}</h3>
                     </div>
                   </div>

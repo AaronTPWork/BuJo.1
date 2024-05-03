@@ -66,7 +66,8 @@ export const EditNoteModal = ({ isModalOpen, closeModal, currentNote }) => {
             onChange={(vals) => {
               setselectedProject(vals.value);
             }}
-            menuPortalTarget={null}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+            menuPortalTarget={document.body}
           />
 
           <button
