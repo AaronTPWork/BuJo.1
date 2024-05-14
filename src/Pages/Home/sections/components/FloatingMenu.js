@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   Circle,
@@ -32,34 +32,34 @@ import {
   QuestionMark,
   InitNote,
   BlankSVG,
-} from '../../../../Components/icons';
-import { useJournalRefs } from '../../../../Services/Reference';
+} from "../../../../Components/icons";
+import { useJournalRefs } from "../../../../Services/Reference";
 
 const iconComponents = {
-  'bullet-init-note': InitNote,
-  'circle-init-task': Circle,
-  'circle-started-task': CircleHalf,
-  'circle-completed-task': CircleFull,
-  'circle-migrated-task': CircleArrowLeft,
-  'circle-delegated-task': CircleArrowRight,
-  'circle-cancelled-task': CircleX,
-  'square-init-event': Square,
-  'square-started-event': SquareHalf,
-  'square-completed-event': SquareFull,
-  'square-migrated-event': SquareLeftArrow,
-  'square-delegated-event': SquareRightArrow,
-  'square-cancelled-event': SquareX,
-  'diamond-init-appointment': Diamond,
-  'diamond-started-appointment': DiamondHalf,
-  'diamond-completed-appointment': DiamondFull,
-  'diamond-migrated-appointment': DiamondLeft,
-  'diamond-delegated-appointment': DiamondRight,
-  'diamond-cancelled-appointment': DiamondX,
-  'no context': BlankSVG,
+  "bullet-init-note": InitNote,
+  "circle-init-task": Circle,
+  "circle-started-task": CircleHalf,
+  "circle-completed-task": CircleFull,
+  "circle-migrated-task": CircleArrowLeft,
+  "circle-delegated-task": CircleArrowRight,
+  "circle-cancelled-task": CircleX,
+  "square-init-event": Square,
+  "square-started-event": SquareHalf,
+  "square-completed-event": SquareFull,
+  "square-migrated-event": SquareLeftArrow,
+  "square-delegated-event": SquareRightArrow,
+  "square-cancelled-event": SquareX,
+  "diamond-init-appointment": Diamond,
+  "diamond-started-appointment": DiamondHalf,
+  "diamond-completed-appointment": DiamondFull,
+  "diamond-migrated-appointment": DiamondLeft,
+  "diamond-delegated-appointment": DiamondRight,
+  "diamond-cancelled-appointment": DiamondX,
+  "no context": BlankSVG,
   important: Astrick,
   reminder: Exclamation1,
-  'reminder-2': Exclamation2,
-  'reminder-3': Exclamation3,
+  "reminder-2": Exclamation2,
+  "reminder-3": Exclamation3,
   question: QuestionMark,
   money: DollarBill,
   PencilPage,
@@ -75,8 +75,16 @@ export const getIconComponent = (iconName, styles) => {
   return <IconComponent styles={styles} />;
 };
 
-export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refName, getIconName }) => {
+export const FloatingMenu = ({
+  floatingMenuPosition,
+  closeMenu,
+  selectIcon,
+  refName,
+  getIconName,
+  note,
+}) => {
   const { data } = useJournalRefs(refName);
+  console.log(note);
 
   return (
     <div
@@ -93,6 +101,33 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
       <div className="flex flex-col items-start mt-2 overflow-scroll">
         {data &&
           data?.map((ref, idx) => {
+            if (getIconName(ref) === "reminder") {
+              return (
+                <button key={`icon_button_${idx}`} className="icon_button">
+                  {getIconComponent(getIconName(ref), "h-4")}
+                  <label htmlFor="reminder-due-date" className="pl-2 text-left">
+                    {getIconName(ref)}
+                  </label>
+                  <input
+                    id="reminder-due-date"
+                    type="date"
+                    value={note?.due_date?.slice(0,10)}
+                    style={{
+                      opacity: 0,
+                      position: "absolute",
+                      zIndex: -1,
+                      left: 150,
+                      top: 150,
+                    }}
+                    onFocus={(event) => event.target.showPicker?.()}
+                    onChange={(e) =>
+                      selectIcon({ iconId: ref.id, due_date: e.target.value })
+                    }
+                  />
+                </button>
+              );
+            }
+
             return (
               <button
                 key={`icon_button_${idx}`}
@@ -101,7 +136,7 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
                 }}
                 className="icon_button"
               >
-                {getIconComponent(getIconName(ref), 'h-4')}
+                {getIconComponent(getIconName(ref), "h-4")}
                 <span className="pl-2 text-left">{getIconName(ref)}</span>
               </button>
             );

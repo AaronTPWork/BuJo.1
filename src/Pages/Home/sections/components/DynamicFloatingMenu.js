@@ -33,7 +33,6 @@ import {
   InitNote,
   BlankSVG,
 } from '../../../../Components/icons';
-import { useJournalRefs } from '../../../../Services/Reference';
 import { useBulletIcons } from '../../../../Services/Reference/hooks';
 
 const iconComponents = {
