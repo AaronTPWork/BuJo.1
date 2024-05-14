@@ -84,7 +84,6 @@ export const FloatingMenu = ({
   note,
 }) => {
   const { data } = useJournalRefs(refName);
-  console.log(note);
 
   return (
     <div
@@ -111,7 +110,7 @@ export const FloatingMenu = ({
                   <input
                     id="reminder-due-date"
                     type="date"
-                    value={note?.due_date?.slice(0,10)}
+                    value={note?.due_date?.slice(0, 10)}
                     style={{
                       opacity: 0,
                       position: "absolute",
@@ -132,7 +131,7 @@ export const FloatingMenu = ({
               <button
                 key={`icon_button_${idx}`}
                 onClick={() => {
-                  selectIcon(ref.id);
+                  selectIcon({ iconId: ref.id, due_date: null });
                 }}
                 className="icon_button"
               >
