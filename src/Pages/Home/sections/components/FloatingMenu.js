@@ -131,7 +131,7 @@ export const FloatingMenu = ({
               <button
                 key={`icon_button_${idx}`}
                 onClick={() => {
-                  selectIcon({ iconId: ref.id, due_date: null });
+                  selectIcon({ iconId: ref.id });
                 }}
                 className="icon_button"
               >
