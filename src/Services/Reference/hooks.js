@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios-instance';
 export const useJournalRefs = (refName) => {
   const query = useQuery({
     queryKey: [refName],
-    queryFn: () => axiosInstance.get(`/journal/${refName}`),
+    queryFn: () => axiosInstance.get(`/${refName}`),
   });
 
   return {
@@ -15,7 +15,7 @@ export const useJournalRefs = (refName) => {
 export const useBulletIcons = (selectedIcon) => {
   const query = useQuery({
     queryKey: ['dynamic-icon', selectedIcon],
-    queryFn: () => axiosInstance.get(`/journal/journal_icon${selectedIcon ? `?icon=${selectedIcon}` : ''}`),
+    queryFn: () => axiosInstance.get(`/journal_icon${selectedIcon ? `?icon=${selectedIcon}` : ''}`),
   });
 
   return {
@@ -27,7 +27,7 @@ export const useBulletIcons = (selectedIcon) => {
 export const useSingleJournalRef = (refName, id) => {
   const query = useQuery({
     queryKey: [refName, id],
-    queryFn: () => axiosInstance.get(`/journal/${refName}?id=${id}`),
+    queryFn: () => axiosInstance.get(`/${refName}?id=${id}`),
   });
 
   return {

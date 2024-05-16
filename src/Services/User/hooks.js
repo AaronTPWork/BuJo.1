@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios-instance';
 export const useUsers = () => {
   const query = useQuery({
     queryKey: ['users'],
-    queryFn: () => axiosInstance.get(`/journal/users`),
+    queryFn: () => axiosInstance.get(`/users`),
   });
 
   return {
@@ -16,7 +16,7 @@ export const useUsers = () => {
 export const useSingleUser = (id) => {
   const query = useQuery({
     queryKey: ['users', id],
-    queryFn: () => axiosInstance.get(`/journal/users${id ? `?id=${id}` : ''}`),
+    queryFn: () => axiosInstance.get(`/users${id ? `?id=${id}` : ''}`),
   });
 
   return {

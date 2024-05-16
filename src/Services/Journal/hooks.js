@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios-instance';
 export const useDailyJournals = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['journals'],
-    queryFn: () => axiosInstance.get('/journal/daily_journal_date'),
+    queryFn: () => axiosInstance.get('/daily_journal_date'),
   });
 
   return { journals: data && data.data ? Object.values(data?.data) : [], isLoading };
@@ -15,7 +15,7 @@ export const useDailyJournalNotes = (date, search = 'no completed') => {
     queryKey: ['journals', date, search],
     queryFn: () =>
       axiosInstance.get(
-        `/journal/daily_journal_date_task?date_created=${date}${search !== 'all' ? `&search=${search}` : ''}`
+        `/daily_journal_date_task?date_created=${date}${search !== 'all' ? `&search=${search}` : ''}`
       ),
   });
 
@@ -25,7 +25,7 @@ export const useDailyJournalNotes = (date, search = 'no completed') => {
 export const useDailyJournalsByUser = (userId) => {
   const { data, isLoading } = useQuery({
     queryKey: ['journals', userId],
-    queryFn: () => axiosInstance.get(`/journal/daily_journal_userid?user_id=${userId}`),
+    queryFn: () => axiosInstance.get(`/daily_journal_userid?user_id=${userId}`),
   });
 
   return { journals: data && data.data ? Object.values(data?.data) : [], isLoading };
@@ -39,8 +39,8 @@ export const useDailyJournalsBySearch = () => {
   } = useMutation({
     mutationFn: (search, userId) => {
       if (search === 'no completed')
-        return axiosInstance.get(`/journal/journal_search_task?search=${search}&user_id=${userId ?? '0'}`);
-      else return axiosInstance.get(`/journal/journal_search?search=${search}&user_id=${userId ?? '0'}`);
+        return axiosInstance.get(`/journal_search_task?search=${search}&user_id=${userId ?? '0'}`);
+      else return axiosInstance.get(`/journal_search?search=${search}&user_id=${userId ?? '0'}`);
     },
   });
 
