@@ -35,7 +35,7 @@ import {
 } from '../../../../Components/icons';
 import { useBulletIcons } from '../../../../Services/Reference/hooks';
 
-const iconComponents = {
+export const iconComponents = {
   'bullet-init-note': InitNote,
   'circle-init-task': Circle,
   'circle-started-task': CircleHalf,
@@ -68,10 +68,12 @@ const iconComponents = {
   SearchIcon,
   Minus,
   Exclamation2,
+  'rectangle-init-image': InitNote,
 };
 
 export const getIconComponent = (iconName, styles) => {
   const IconComponent = iconComponents[iconName];
+  if (IconComponent === undefined) return null;
   return <IconComponent styles={styles} />;
 };
 
