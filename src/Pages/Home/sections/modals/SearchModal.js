@@ -5,14 +5,8 @@ import { useDailyJournalsBySearch } from '../../../../Services/Journal/hooks';
 import { useGlobalValues } from '../../../../Stores/GlobalValues';
 import { format } from 'date-fns';
 import { ProjectItem } from '../SavedNotes';
-import Select from 'react-select';
 import { BulletIcon } from '../components/BulletIcon';
 
-const options = [
-  { value: 'all', label: 'All' },
-  // { value: 'migrated', label: 'Migrated' },
-  { value: 'no completed', label: 'Incomplete' },
-];
 
 export const SearchModal = ({ isModalOpen, closeModal }) => {
   const {
@@ -36,13 +30,19 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
     e.preventDefault();
     setCurrentSearch(localSearchValue);
     const filterSearch = currentFilter === 'all' ? localSearchValue : currentFilter;
-    searchValue(filterSearch, selectedUserId);
+    searchValue({
+      search: filterSearch, 
+      userId: selectedUserId
+    });
   };
 
   useEffect(() => {
     if (currentSearch === '') return;
     const filterSearch = currentFilter === 'all' ? currentSearch : currentFilter;
-    searchValue(filterSearch, selectedUserId);
+    searchValue({
+      search: filterSearch, 
+      userId: selectedUserId
+    });
 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,25 +67,28 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               </form>
             </div>
             <div className="px-5 w-72 my-auto border-r mr-5">
-              <Select
-                value={options.find((option) => option.value === currentFilter)}
-                options={options}
-                form="project_stream"
-                onChange={(vals) => {
-                  let filter = vals.value;
-                  if (vals.value === 'no completed') {
+            <div
+            className={"flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer"}
+            onClick={() => {
+              let filter = 'no completed';
+              let savingFilter = 'all'
+              if (currentFilter === 'no completed') {
+                    filter = localSearchValue;
+                  } else {
+                    savingFilter = 'no completed';
                     filter = 'no completed';
                     setCurrentSearch('');
                     setLocalSearchValue('');
-                  } else {
-                    filter = localSearchValue;
                   }
-                  searchValue(filter, selectedUserId);
-                  setCurrentFilter(vals.value);
-                }}
-                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                menuPortalTarget={document.body}
-              />
+                  searchValue({
+                    search: filter,
+                    userId: selectedUserId
+                  });
+                  setCurrentFilter(savingFilter);
+            }}
+          >
+            <h3>{currentFilter === 'no completed'? 'All': 'No completed'}</h3>
+          </div>
             </div>
             <button
               onClick={handleSubmit}
