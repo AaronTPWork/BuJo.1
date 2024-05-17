@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   Circle,
@@ -32,34 +32,36 @@ import {
   QuestionMark,
   InitNote,
   BlankSVG,
-} from '../../../../Components/icons';
-import { useBulletIcons } from '../../../../Services/Reference/hooks';
+  ImageIcon,
+} from "../../../../Components/icons";
+import { useBulletIcons } from "../../../../Services/Reference/hooks";
 
-export const iconComponents = {
-  'bullet-init-note': InitNote,
-  'circle-init-task': Circle,
-  'circle-started-task': CircleHalf,
-  'circle-completed-task': CircleFull,
-  'circle-migrated-task': CircleArrowLeft,
-  'circle-delegated-task': CircleArrowRight,
-  'circle-cancelled-task': CircleX,
-  'square-init-event': Square,
-  'square-started-event': SquareHalf,
-  'square-completed-event': SquareFull,
-  'square-migrated-event': SquareLeftArrow,
-  'square-delegated-event': SquareRightArrow,
-  'square-cancelled-event': SquareX,
-  'diamond-init-appointment': Diamond,
-  'diamond-started-appointment': DiamondHalf,
-  'diamond-completed-appointment': DiamondFull,
-  'diamond-migrated-appointment': DiamondLeft,
-  'diamond-delegated-appointment': DiamondRight,
-  'diamond-cancelled-appointment': DiamondX,
-  'no context': BlankSVG,
+const iconComponents = {
+  "bullet-init-note": InitNote,
+  "circle-init-task": Circle,
+  "circle-started-task": CircleHalf,
+  "circle-completed-task": CircleFull,
+  "circle-migrated-task": CircleArrowLeft,
+  "circle-delegated-task": CircleArrowRight,
+  "circle-cancelled-task": CircleX,
+  "rectangle-init-image": ImageIcon,
+  "square-init-event": Square,
+  "square-started-event": SquareHalf,
+  "square-completed-event": SquareFull,
+  "square-migrated-event": SquareLeftArrow,
+  "square-delegated-event": SquareRightArrow,
+  "square-cancelled-event": SquareX,
+  "diamond-init-appointment": Diamond,
+  "diamond-started-appointment": DiamondHalf,
+  "diamond-completed-appointment": DiamondFull,
+  "diamond-migrated-appointment": DiamondLeft,
+  "diamond-delegated-appointment": DiamondRight,
+  "diamond-cancelled-appointment": DiamondX,
+  "no context": BlankSVG,
   important: Astrick,
   reminder: Exclamation1,
-  'reminder-2': Exclamation2,
-  'reminder-3': Exclamation3,
+  "reminder-2": Exclamation2,
+  "reminder-3": Exclamation3,
   question: QuestionMark,
   money: DollarBill,
   PencilPage,
@@ -68,7 +70,6 @@ export const iconComponents = {
   SearchIcon,
   Minus,
   Exclamation2,
-  'rectangle-init-image': InitNote,
 };
 
 export const getIconComponent = (iconName, styles) => {
@@ -77,8 +78,15 @@ export const getIconComponent = (iconName, styles) => {
   return <IconComponent styles={styles} />;
 };
 
-export const DynamicFloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, selectedIcon, getIconName }) => {
+export const DynamicFloatingMenu = ({
+  floatingMenuPosition,
+  closeMenu,
+  selectIcon,
+  selectedIcon,
+  getIconName,
+}) => {
   const { data } = useBulletIcons(selectedIcon);
+  console.log(data);
 
   return (
     <div
@@ -104,7 +112,7 @@ export const DynamicFloatingMenu = ({ floatingMenuPosition, closeMenu, selectIco
                 }}
                 className="icon_button"
               >
-                {getIconComponent(getIconName(ref), 'h-4')}
+                {getIconComponent(getIconName(ref), "h-4")}
                 <span className="pl-2 text-left">{getIconName(ref)}</span>
               </button>
             );
