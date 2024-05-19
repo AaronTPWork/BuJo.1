@@ -1,4 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import ReactModal from "react-modal";
+
 import { PencilPage, SearchIcon } from "../../../Components/icons";
 import { FloatingMenu } from "./components/FloatingMenu";
 import { useDailyJournalNotes } from "../../../Services/Journal/hooks";
@@ -26,7 +33,14 @@ function debounce(func, delay) {
   };
 }
 
-export const InputArea = ({ value, handleInput, note, index, ...props }) => {
+export const InputArea = ({
+  value,
+  handleInput,
+  note,
+  index,
+  onImage,
+  ...props
+}) => {
   const [localValue, setLocalValue] = useState("");
   const ref = useRef(null);
   useEffect(() => {
@@ -41,6 +55,11 @@ export const InputArea = ({ value, handleInput, note, index, ...props }) => {
 
   return (
     <div className="relative">
+      {note.image_meta ? (
+        <span onClick={onImage}>
+          <img src={note.image_meta} className="w-8 h-8 inline-block" />
+        </span>
+      ) : null}
       <input
         {...props}
         type="text"
@@ -86,6 +105,8 @@ const NoteWithAnnotations = () => {
   const [currentNote, setcurrentNote] = useState();
   const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
+
+  const [openImage, setOpenImage] = useState("");
 
   const filteredNotesByProjectStream = notes?.filter(
     (note) =>
@@ -160,7 +181,6 @@ const NoteWithAnnotations = () => {
 
   const handleInput = (e, note, index, value) => {
     const newText = value;
-    console.log(value);
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       // if (previousKeyPress === 'Enter') {
@@ -194,12 +214,13 @@ const NoteWithAnnotations = () => {
     }
   };
 
-  const selectPrimaryIcon = (iconId, iconRef) => {
+  const selectPrimaryIcon = ({ iconId, ...rest }, iconRef) => {
     if (!currentNote.id) {
       const newNote = {
         date_created: selectedDate ?? todayDate,
         user_id: selectedUserId,
         bullet_stream: iconId,
+        ...rest,
       };
       if (selectedProject) newNote.project_stream = selectedProject;
       createNote(newNote);
@@ -208,6 +229,7 @@ const NoteWithAnnotations = () => {
         // ...currentNote,
         id: currentNote.id,
         bullet_stream: iconId,
+        ...rest,
       });
     }
     if (iconRef && iconRef.state === "migrated" && currentNote) {
@@ -298,6 +320,7 @@ const NoteWithAnnotations = () => {
                     <div className="flex flex-col w-full pl-1">
                       <InputArea
                         handleInput={handleInput}
+                        onImage={() => setOpenImage(note.image_meta)}
                         note={note}
                         index={index}
                         id={`input-ref-${index}`}
@@ -357,6 +380,31 @@ const NoteWithAnnotations = () => {
             setShowProjectModal(false);
           }}
         />
+      )}
+
+      {openImage && (
+        <ReactModal
+          isOpen={true}
+          onRequestClose={() => {
+            setOpenImage("");
+          }}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 1000,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+            content: {
+              width: "fit-content",
+              height: "fit-content",
+              position: "relative",
+            },
+          }}
+        >
+          <img src={openImage} />
+        </ReactModal>
       )}
     </div>
   );
