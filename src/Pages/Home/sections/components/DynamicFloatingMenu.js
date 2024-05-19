@@ -84,9 +84,9 @@ export const DynamicFloatingMenu = ({
   selectIcon,
   selectedIcon,
   getIconName,
+  note,
 }) => {
   const { data } = useBulletIcons(selectedIcon);
-  console.log(data);
 
   return (
     <div
@@ -104,11 +104,50 @@ export const DynamicFloatingMenu = ({
         {data &&
           data?.length > 0 &&
           data?.map((ref, idx) => {
+            if (getIconName(ref) === "rectangle-init-image") {
+              return (
+                <button key={`icon_button_${idx}`} className="icon_button">
+                  {getIconComponent(getIconName(ref), "h-4")}
+                  <label htmlFor="reminder-due-date" className="pl-2 text-left">
+                    {getIconName(ref)}
+                  </label>
+                  <input
+                    id="reminder-due-date"
+                    type="file"
+                    value={note?.due_date?.slice(0, 10)}
+                    style={{
+                      opacity: 0,
+                      position: "absolute",
+                      zIndex: -1,
+                      left: 150,
+                      top: 150,
+                    }}
+                    onChange={(e) => {
+                      const reader = new FileReader();
+
+                      reader.onload = () => {
+                        selectIcon(
+                          { iconId: ref.id, image_meta: reader.result },
+                          ref
+                        );
+                      };
+
+                      reader.onerror = (error) => {
+                        console.error("Error reading file:", error);
+                      };
+
+                      reader.readAsDataURL(e.target.files[0]);
+                    }}
+                  />
+                </button>
+              );
+            }
+
             return (
               <button
                 key={`icon_button_${idx}`}
                 onClick={() => {
-                  selectIcon(ref.id, ref);
+                  selectIcon({ iconId: ref.id }, ref);
                 }}
                 className="icon_button"
               >
