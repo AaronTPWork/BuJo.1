@@ -400,9 +400,14 @@ const NoteWithAnnotations = () => {
               width: "fit-content",
               height: "fit-content",
               position: "relative",
+              maxHeight: '90vh',
+              maxWidth: '90vw',
             },
           }}
         >
+          <div className="w-full">
+            <button onClick={() => setOpenImage('')} className="float-right text-3xl hover:opacity-50">&times;</button>
+          </div>
           <img src={openImage} />
         </ReactModal>
       )}
