@@ -1,22 +1,17 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import ReactModal from "react-modal";
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import ReactModal from 'react-modal';
 
-import { PencilPage, SearchIcon } from "../../../Components/icons";
-import { FloatingMenu } from "./components/FloatingMenu";
-import { useDailyJournalNotes } from "../../../Services/Journal/hooks";
-import { BulletIcon } from "./components/BulletIcon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createJournal, editJournal } from "../../../Services/Journal";
-import { todayDate, useGlobalValues } from "../../../Stores/GlobalValues";
-import { EditNoteModal } from "./modals/EditNoteModal";
-import { ProjectModal } from "./modals/ProjectModal";
-import { migrateNote } from "../../../Services/Journal/api";
-import { DynamicFloatingMenu } from "./components/DynamicFloatingMenu";
+import { PencilPage, SearchIcon } from '../../../Components/icons';
+import { FloatingMenu } from './components/FloatingMenu';
+import { useDailyJournalNotes } from '../../../Services/Journal/hooks';
+import { BulletIcon } from './components/BulletIcon';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createJournal, editJournal } from '../../../Services/Journal';
+import { todayDate, useGlobalValues } from '../../../Stores/GlobalValues';
+import { EditNoteModal } from './modals/EditNoteModal';
+import { ProjectModal } from './modals/ProjectModal';
+import { migrateNote } from '../../../Services/Journal/api';
+import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -33,15 +28,8 @@ function debounce(func, delay) {
   };
 }
 
-export const InputArea = ({
-  value,
-  handleInput,
-  note,
-  index,
-  onImage,
-  ...props
-}) => {
-  const [localValue, setLocalValue] = useState("");
+export const InputArea = ({ value, handleInput, note, index, onImage, ...props }) => {
+  const [localValue, setLocalValue] = useState('');
   const ref = useRef(null);
   useEffect(() => {
     setLocalValue(note.text_stream);
@@ -64,11 +52,11 @@ export const InputArea = ({
         {...props}
         type="text"
         className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-fit w-3"
-        placeholder={localValue === "" ? "Type your note here..." : ""}
-        value={localValue ?? ""}
+        placeholder={localValue === '' ? 'Type your note here...' : ''}
+        value={localValue ?? ''}
         onChange={(e) => {
           const target = e.target;
-          target.style.width = "10px";
+          target.style.width = '10px';
           target.style.width = `${target.scrollWidth + 4}px`;
 
           setLocalValue(e.target.value);
@@ -76,17 +64,17 @@ export const InputArea = ({
         onKeyDown={(e) => handleInput(e, note, index, localValue)}
         ref={ref}
       />
-      {note.due_date && (
-        <span className="p-1 text-red-400">{note.due_date?.slice(0, 10)}</span>
-      )}
+      {note.due_date && <span className="p-1 text-red-400">{note.due_date?.slice(0, 10)}</span>}
+      {note.del_email ? (
+        <span className="p-1 text-green-600">Delegated: {note.del_email} </span>
+      ) : null}
     </div>
   );
 };
 
 const NoteWithAnnotations = () => {
   const [showPrimaryFloatingMenu, setShowPrimaryFloatingMenu] = useState(false);
-  const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] =
-    useState(false);
+  const [showSecondaryFloatingMenu, setShowSecondaryFloatingMenu] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const newNoteRef = React.createRef(null);
 
@@ -106,20 +94,17 @@ const NoteWithAnnotations = () => {
   const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
 
-  const [openImage, setOpenImage] = useState("");
+  const [openImage, setOpenImage] = useState('');
 
   const filteredNotesByProjectStream = notes?.filter(
-    (note) =>
-      note.project_stream === selectedProject && note.user_id === selectedUserId
+    (note) => note.project_stream === selectedProject && note.user_id === selectedUserId,
   );
 
   useLayoutEffect(() => {
     if (!newNoteRef.current) {
       const lastItem = filteredNotesByProjectStream.length;
       if (lastItem > 0) {
-        newNoteRef.current = document.getElementById(
-          `input-ref-${lastItem - 1}`
-        );
+        newNoteRef.current = document.getElementById(`input-ref-${lastItem - 1}`);
         newNoteRef.current.focus();
       }
     }
@@ -128,10 +113,10 @@ const NoteWithAnnotations = () => {
 
   const invalidateQueries = () => {
     qClient.invalidateQueries({
-      queryKey: ["journals"],
+      queryKey: ['journals'],
     });
     qClient.invalidateQueries({
-      queryKey: ["journals", selectedDate],
+      queryKey: ['journals', selectedDate],
     });
   };
 
@@ -181,7 +166,7 @@ const NoteWithAnnotations = () => {
 
   const handleInput = (e, note, index, value) => {
     const newText = value;
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       // if (previousKeyPress === 'Enter') {
       if (!note.id) {
@@ -199,7 +184,7 @@ const NoteWithAnnotations = () => {
             id: note.id,
             text_stream: newText,
           }),
-          500
+          500,
         );
       }
       const nextNoteIdx = index + 1;
@@ -232,7 +217,7 @@ const NoteWithAnnotations = () => {
         ...rest,
       });
     }
-    if (iconRef && iconRef.state === "migrated" && currentNote) {
+    if (iconRef && iconRef.state === 'migrated' && currentNote) {
       migrate({ noteId: currentNote.id });
     }
     setShowPrimaryFloatingMenu(false);
@@ -244,7 +229,7 @@ const NoteWithAnnotations = () => {
         date_created: selectedDate ?? todayDate,
         project_stream: selectedProject,
         user_id: selectedUserId,
-        context_stream: iconId ?? "0",
+        context_stream: iconId ?? '0',
         ...rest,
       };
       if (selectedProject) newNote.project_stream = selectedProject;
@@ -252,7 +237,7 @@ const NoteWithAnnotations = () => {
     } else {
       editNote({
         id: currentNote.id,
-        context_stream: iconId ?? "0",
+        context_stream: iconId ?? '0',
         ...rest,
       });
     }
@@ -269,7 +254,7 @@ const NoteWithAnnotations = () => {
             setShowProjectModal(true);
           }}
         >
-          <PencilPage styles={"h-6 md:h-10 my-auto ml-5 md:hidden"} />
+          <PencilPage styles={'h-6 md:h-10 my-auto ml-5 md:hidden'} />
         </div>
         <div className="flex gap-x-5">
           <div className="flex px-5 my-auto border-r h-fit"></div>
@@ -280,7 +265,7 @@ const NoteWithAnnotations = () => {
             }}
             className="flex px-5 my-auto border-l h-fit cursor-pointer"
           >
-            <SearchIcon styles={"h-6 md:h-10 w-10 my-auto"} />
+            <SearchIcon styles={'h-6 md:h-10 w-10 my-auto'} />
           </div>
         </div>
       </div>
@@ -288,59 +273,52 @@ const NoteWithAnnotations = () => {
         <div className="flex flex-col h-full w-full pt-1 border-r border-r-[#e5e7eb] relative">
           {selectedUserId &&
             selectedUserId.length > 0 &&
-            [...(filteredNotesByProjectStream || []), {}]?.map(
-              (note, index) => {
-                return (
-                  <div
-                    key={`note-detail-${index}`}
-                    className="flex w-full items-center"
-                  >
-                    <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                      <BulletIcon
-                        refName={"ref_context"}
-                        note={note}
-                        selectedIconId={note.context_stream}
-                        getIconName={(ref) => `${ref.name}`}
-                        handleClick={handleSecondaryClick}
-                        index={index}
-                      />
-                    </div>
-                    <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                      <BulletIcon
-                        refName={"ref_bullet"}
-                        note={note}
-                        selectedIconId={note.bullet_stream}
-                        getIconName={(ref) =>
-                          `${ref.ref}-${ref.state}-${ref.name}`
-                        }
-                        handleClick={handlePrimaryClick}
-                        index={index}
-                      />
-                    </div>
-                    <div className="flex flex-col w-full pl-1">
-                      <InputArea
-                        handleInput={handleInput}
-                        onImage={() => setOpenImage(note.image_meta)}
-                        note={note}
-                        index={index}
-                        id={`input-ref-${index}`}
-                      />
-                    </div>
-                    {note.id && (
-                      <div
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setcurrentNote(note);
-                          setshowModal(true);
-                        }}
-                      >
-                        <PencilPage styles={"h-7 my-auto"} />
-                      </div>
-                    )}
+            [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
+              return (
+                <div key={`note-detail-${index}`} className="flex w-full items-center">
+                  <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                    <BulletIcon
+                      refName={'ref_context'}
+                      note={note}
+                      selectedIconId={note.context_stream}
+                      getIconName={(ref) => `${ref.name}`}
+                      handleClick={handleSecondaryClick}
+                      index={index}
+                    />
                   </div>
-                );
-              }
-            )}
+                  <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                    <BulletIcon
+                      refName={'ref_bullet'}
+                      note={note}
+                      selectedIconId={note.bullet_stream}
+                      getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
+                      handleClick={handlePrimaryClick}
+                      index={index}
+                    />
+                  </div>
+                  <div className="flex flex-col w-full pl-1">
+                    <InputArea
+                      handleInput={handleInput}
+                      onImage={() => setOpenImage(note.image_meta)}
+                      note={note}
+                      index={index}
+                      id={`input-ref-${index}`}
+                    />
+                  </div>
+                  {note.id && (
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setcurrentNote(note);
+                        setshowModal(true);
+                      }}
+                    >
+                      <PencilPage styles={'h-7 my-auto'} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
       {showPrimaryFloatingMenu && (
@@ -349,7 +327,7 @@ const NoteWithAnnotations = () => {
           closeMenu={closeMenu}
           selectIcon={selectPrimaryIcon}
           selectedIcon={currentNote?.selectedIconRef}
-          refName={"ref_bullet"}
+          refName={'ref_bullet'}
           getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
         />
       )}
@@ -358,7 +336,7 @@ const NoteWithAnnotations = () => {
           floatingMenuPosition={floatingMenuPosition}
           closeMenu={closeMenu}
           selectIcon={selectSecondaryIcon}
-          refName={"ref_context"}
+          refName={'ref_context'}
           getIconName={(ref) => `${ref.name}`}
           note={currentNote}
         />
@@ -386,20 +364,20 @@ const NoteWithAnnotations = () => {
         <ReactModal
           isOpen={true}
           onRequestClose={() => {
-            setOpenImage("");
+            setOpenImage('');
           }}
           style={{
             overlay: {
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
               zIndex: 1000,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             },
             content: {
-              width: "fit-content",
-              height: "fit-content",
-              position: "relative",
+              width: 'fit-content',
+              height: 'fit-content',
+              position: 'relative',
             },
           }}
         >
