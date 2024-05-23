@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const MenuIcon = ({ styles }) => {
   return (
@@ -12,13 +12,10 @@ export const MenuIcon = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <line x1="8" y1="6" x2="21" y2="6" />{" "}
-        <line x1="8" y1="12" x2="21" y2="12" />{" "}
-        <line x1="8" y1="18" x2="21" y2="18" />{" "}
-        <line x1="3" y1="6" x2="3.01" y2="6" />{" "}
-        <line x1="3" y1="12" x2="3.01" y2="12" />{" "}
-        <line x1="3" y1="18" x2="3.01" y2="18" />
+        {' '}
+        <line x1="8" y1="6" x2="21" y2="6" /> <line x1="8" y1="12" x2="21" y2="12" />{' '}
+        <line x1="8" y1="18" x2="21" y2="18" /> <line x1="3" y1="6" x2="3.01" y2="6" />{' '}
+        <line x1="3" y1="12" x2="3.01" y2="12" /> <line x1="3" y1="18" x2="3.01" y2="18" />
       </svg>
     </>
   );
@@ -36,11 +33,10 @@ export const TileIcon = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-        <rect x="4" y="4" width="6" height="5" rx="2" />{" "}
-        <rect x="4" y="13" width="6" height="7" rx="2" />{" "}
-        <rect x="14" y="4" width="6" height="7" rx="2" />{" "}
+        {' '}
+        <path stroke="none" d="M0 0h24v24H0z" /> <rect x="4" y="4" width="6" height="5" rx="2" />{' '}
+        <rect x="4" y="13" width="6" height="7" rx="2" />{' '}
+        <rect x="14" y="4" width="6" height="7" rx="2" />{' '}
         <rect x="14" y="15" width="6" height="5" rx="2" />
       </svg>
     </>
@@ -59,8 +55,8 @@ export const ThreeDots = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <circle cx="12" cy="12" r="1" /> <circle cx="12" cy="5" r="1" />{" "}
+        {' '}
+        <circle cx="12" cy="12" r="1" /> <circle cx="12" cy="5" r="1" />{' '}
         <circle cx="12" cy="19" r="1" />
       </svg>
     </>
@@ -78,10 +74,10 @@ export const PencilPage = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-        <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />{" "}
-        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />{" "}
+        {' '}
+        <path stroke="none" d="M0 0h24v24H0z" />{' '}
+        <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />{' '}
+        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />{' '}
         <line x1="16" y1="5" x2="19" y2="8" />
       </svg>
     </>
@@ -100,9 +96,8 @@ export const DownloadIcon = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />{" "}
-        <polyline points="17 8 12 3 7 8" />{" "}
+        {' '}
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /> <polyline points="17 8 12 3 7 8" />{' '}
         <line x1="12" y1="3" x2="12" y2="15" />
       </svg>
     </>
@@ -121,9 +116,8 @@ export const LockIcon = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-        <rect x="5" y="11" width="14" height="10" rx="2" />{" "}
+        {' '}
+        <path stroke="none" d="M0 0h24v24H0z" /> <rect x="5" y="11" width="14" height="10" rx="2" />{' '}
         <circle cx="12" cy="16" r="1" /> <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
       </svg>
     </>
@@ -142,9 +136,8 @@ export const SearchIcon = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-        <circle cx="10" cy="10" r="7" />{" "}
+        {' '}
+        <path stroke="none" d="M0 0h24v24H0z" /> <circle cx="10" cy="10" r="7" />{' '}
         <line x1="21" y1="21" x2="15" y2="15" />
       </svg>
     </>
@@ -166,17 +159,17 @@ export const Circle = ({ styles }) => {
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-01"}</title>
+        <title>{'aaronpansringar-01'}</title>
         <path
           d="M7.68 15.36a7.68 7.68 0 1 1 7.68-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z"
           data-name="Page 1"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         />
       </svg>
@@ -187,26 +180,22 @@ export const Circle = ({ styles }) => {
 export const CircleFull = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-03"}</title>
+        <title>{'aaronpansringar-03'}</title>
         <g
           data-name="Page 3"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a7.68 7.68 0 1 1 7.679-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z" />
@@ -231,10 +220,9 @@ export const CirclePlus = ({ styles }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {" "}
-        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-        <circle cx="12" cy="12" r="9" /> <line x1="9" y1="12" x2="15" y2="12" />{" "}
-        <line x1="12" y1="9" x2="12" y2="15" />
+        {' '}
+        <path stroke="none" d="M0 0h24v24H0z" /> <circle cx="12" cy="12" r="9" />{' '}
+        <line x1="9" y1="12" x2="15" y2="12" /> <line x1="12" y1="9" x2="12" y2="15" />
       </svg>
     </>
   );
@@ -272,26 +260,22 @@ export const InitNote = ({ styles }) => {
 export const CircleHalf = ({ styles }) => {
   return (
     <>
-      <svg
-        className={styles}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-      >
+      <svg className={styles} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36">
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-02"}</title>
+        <title>{'aaronpansringar-02'}</title>
         <g
           data-name="Page 2"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a7.68 7.68 0 1 1 7.679-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z" />
@@ -306,26 +290,22 @@ export const CircleHalf = ({ styles }) => {
 export const CircleArrowLeft = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-04"}</title>
+        <title>{'aaronpansringar-04'}</title>
         <g
           data-name="Page 4"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a7.68 7.68 0 1 1 7.68-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z" />
@@ -341,26 +321,22 @@ export const CircleArrowLeft = ({ styles }) => {
 export const CircleArrowRight = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-05"}</title>
+        <title>{'aaronpansringar-05'}</title>
         <g
           data-name="Page 5"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a7.68 7.68 0 1 1 7.68-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z" />
@@ -376,26 +352,22 @@ export const CircleArrowRight = ({ styles }) => {
 export const CircleX = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-06"}</title>
+        <title>{'aaronpansringar-06'}</title>
         <g
           data-name="Page 6"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a7.68 7.68 0 1 1 7.68-7.68 7.688 7.688 0 0 1-7.68 7.68Zm0-14.88a7.2 7.2 0 1 0 7.2 7.2 7.208 7.208 0 0 0-7.2-7.2Z" />
@@ -410,27 +382,23 @@ export const CircleX = ({ styles }) => {
 export const Square = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-07"}</title>
+        <title>{'aaronpansringar-07'}</title>
         <path
           d="M14.4 14.64H.96a.24.24 0 0 1-.24-.24V.96A.24.24 0 0 1 .96.72H14.4a.24.24 0 0 1 .239.24V14.4a.24.24 0 0 1-.24.24Zm-13.2-.48h12.96V1.2H1.2Z"
           data-name="Page 7"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         />
       </svg>
@@ -441,26 +409,22 @@ export const Square = ({ styles }) => {
 export const SquareHalf = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-08"}</title>
+        <title>{'aaronpansringar-08'}</title>
         <g
           data-name="Page 8"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M14.4 14.64H7.68a.24.24 0 0 1-.24-.24V.96a.24.24 0 0 1 .24-.24h6.72a.24.24 0 0 1 .24.24V14.4a.24.24 0 0 1-.24.24Zm-6.48-.48h6.24V1.2H7.92Z" />
@@ -475,26 +439,22 @@ export const SquareHalf = ({ styles }) => {
 export const SquareFull = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-09"}</title>
+        <title>{'aaronpansringar-09'}</title>
         <g
           data-name="Page 9"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M14.4 14.64H.96a.24.24 0 0 1-.24-.24V.96A.24.24 0 0 1 .96.72H14.4a.24.24 0 0 1 .24.24V14.4a.24.24 0 0 1-.24.24Zm-13.2-.48h12.96V1.2H1.2Z" />
@@ -508,26 +468,22 @@ export const SquareFull = ({ styles }) => {
 export const SquareLeftArrow = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-10"}</title>
+        <title>{'aaronpansringar-10'}</title>
         <g
           data-name="Page 10"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M14.4 14.64H.96a.24.24 0 0 1-.24-.24V.96A.24.24 0 0 1 .96.72H14.4a.24.24 0 0 1 .24.24V14.4a.24.24 0 0 1-.24.24Zm-13.2-.48h12.96V1.2H1.2Z" />
@@ -543,26 +499,22 @@ export const SquareLeftArrow = ({ styles }) => {
 export const SquareRightArrow = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-11"}</title>
+        <title>{'aaronpansringar-11'}</title>
         <g
           data-name="Page 11"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M14.4 14.64H.96a.24.24 0 0 1-.24-.24V.96A.24.24 0 0 1 .96.72H14.4a.24.24 0 0 1 .24.24V14.4a.24.24 0 0 1-.24.24Zm-13.2-.48h12.96V1.2H1.2Z" />
@@ -578,26 +530,22 @@ export const SquareRightArrow = ({ styles }) => {
 export const SquareX = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-12"}</title>
+        <title>{'aaronpansringar-12'}</title>
         <g
           data-name="Page 12"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M14.4 14.64H.96a.24.24 0 0 1-.24-.24V.96A.24.24 0 0 1 .96.72H14.4a.24.24 0 0 1 .24.24V14.4a.24.24 0 0 1-.24.24Zm-13.2-.48h12.96V1.2H1.2Z" />
@@ -612,27 +560,23 @@ export const SquareX = ({ styles }) => {
 export const Diamond = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-13"}</title>
+        <title>{'aaronpansringar-13'}</title>
         <path
           d="M7.68 15.36a.24.24 0 0 1-.17-.07L.07 7.85a.24.24 0 0 1 0-.34L7.51.07a.248.248 0 0 1 .34 0l7.44 7.44a.24.24 0 0 1 0 .34l-7.44 7.44a.24.24 0 0 1-.17.07ZM.58 7.68l7.1 7.1 7.101-7.1L7.679.58Z"
           data-name="Page 13"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         />
       </svg>
@@ -643,26 +587,22 @@ export const Diamond = ({ styles }) => {
 export const DiamondHalf = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-14"}</title>
+        <title>{'aaronpansringar-14'}</title>
         <g
           data-name="Page 14"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a.24.24 0 0 1-.17-.07L.07 7.85a.24.24 0 0 1 0-.34L7.51.07a.24.24 0 0 1 .34 0l7.44 7.44a.24.24 0 0 1 0 .34l-7.44 7.44a.24.24 0 0 1-.17.07ZM.58 7.68l7.1 7.1 7.1-7.1-7.1-7.1Z" />
@@ -677,26 +617,22 @@ export const DiamondHalf = ({ styles }) => {
 export const DiamondFull = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-15"}</title>
+        <title>{'aaronpansringar-15'}</title>
         <g
           data-name="Page 15"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M7.68 15.36a.24.24 0 0 1-.17-.07L.07 7.85a.24.24 0 0 1 0-.34L7.51.07a.24.24 0 0 1 .34 0l7.44 7.44a.24.24 0 0 1 0 .34l-7.44 7.44a.24.24 0 0 1-.17.07ZM.579 7.68l7.1 7.1 7.101-7.1-7.1-7.1Z" />
@@ -710,26 +646,22 @@ export const DiamondFull = ({ styles }) => {
 export const DiamondLeft = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-16"}</title>
+        <title>{'aaronpansringar-16'}</title>
         <g
           data-name="Page 16"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M11.28 7.921h-7.2a.24.24 0 1 1 0-.48h7.2a.24.24 0 1 1 0 .48Z" />
@@ -745,26 +677,22 @@ export const DiamondLeft = ({ styles }) => {
 export const DiamondRight = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-17"}</title>
+        <title>{'aaronpansringar-17'}</title>
         <g
           data-name="Page 17"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M11.28 7.921h-7.2a.24.24 0 1 1 0-.48h7.2a.24.24 0 1 1 0 .48Z" />
@@ -780,27 +708,23 @@ export const DiamondRight = ({ styles }) => {
 export const DiamondX = ({ styles }) => {
   return (
     <>
-      {" "}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      {' '}
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-18"}</title>
+        <title>{'aaronpansringar-18'}</title>
         <g
           data-name="Page 18"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path d="M10.149 10.488 4.872 5.21a.24.24 0 1 1 .34-.34l5.277 5.277Z" />
@@ -815,32 +739,28 @@ export const DiamondX = ({ styles }) => {
 export const Minus = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-19"}</title>
+        <title>{'aaronpansringar-19'}</title>
         <g
           data-name="Page 19"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path
             d="M2.88 6.242h9.6a.962.962 0 0 1 .96.96v.956a.962.962 0 0 1-.96.96h-9.6a.962.962 0 0 1-.96-.96v-.956a.962.962 0 0 1 .96-.96"
             style={{
-              fillRule: "evenodd",
+              fillRule: 'evenodd',
             }}
           />
         </g>
@@ -852,27 +772,23 @@ export const Minus = ({ styles }) => {
 export const DollarBill = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-20"}</title>
+        <title>{'aaronpansringar-20'}</title>
         <path
           d="M8.4 11.517h.682a1.561 1.561 0 0 0 1.56-1.56l.003-.002a1.566 1.566 0 0 0-1.56-1.557H8.4Zm-1.44-7.68h-.682a1.559 1.559 0 0 0-1.105 2.661 1.572 1.572 0 0 0 1.105.462l.682.001Zm3.877-1.44a.72.72 0 1 1 0 1.44H8.4V6.96l.684-.002a3.001 3.001 0 0 1 2.996 2.998l.002.002a3.006 3.006 0 0 1-3 3H8.4v.48a.72.72 0 0 1-1.44 0v-.48H4.523a.72.72 0 1 1 0-1.44H6.96V8.395l-.682-.001a2.998 2.998 0 0 1 0-5.997h.682v-.48a.72.72 0 0 1 1.44 0v.48Z"
           data-name="Page 20"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         />
       </svg>
@@ -883,27 +799,23 @@ export const DollarBill = ({ styles }) => {
 export const Astrick = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-21"}</title>
+        <title>{'aaronpansringar-21'}</title>
         <path
           d="M13.199 6.96a.72.72 0 1 1 0 1.44h-3.78l2.673 2.673a.72.72 0 0 1-1.019 1.018L8.4 9.418v3.78a.72.72 0 0 1-1.44 0v-3.78l-2.673 2.674a.72.72 0 0 1-1.019-1.019L5.942 8.4H2.16a.72.72 0 0 1 0-1.44h3.78L3.269 4.287a.72.72 0 0 1 1.019-1.019L6.96 5.942V2.16a.72.72 0 1 1 1.44 0v3.78l2.673-2.673a.72.72 0 0 1 1.018 1.019L9.418 6.96Z"
           data-name="Page 21"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         />
       </svg>
@@ -914,39 +826,35 @@ export const Astrick = ({ styles }) => {
 export const Exclamation1 = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-22"}</title>
+        <title>{'aaronpansringar-22'}</title>
         <g
           data-name="Page 22"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path
             d="M6.48 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.2 1.2L8.4 9.835a.72.72 0 0 1-1.44 0Z"
             style={{
-              fill: "#e69138",
+              fill: '#e69138',
             }}
           />
           <path
             d="M7.36 11.998H8a.64.64 0 0 1 .64.64v.64a.64.64 0 0 1-.64.64h-.64a.64.64 0 0 1-.64-.64v-.64a.64.64 0 0 1 .64-.64"
             style={{
-              fill: "#e69138",
-              fillRule: "evenodd",
+              fill: '#e69138',
+              fillRule: 'evenodd',
             }}
           />
         </g>
@@ -958,52 +866,48 @@ export const Exclamation1 = ({ styles }) => {
 export const Exclamation2 = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-23"}</title>
+        <title>{'aaronpansringar-23'}</title>
         <g
           data-name="Page 23"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path
             d="M4.081 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.2 1.2L6 9.835a.72.72 0 0 1-1.44 0Z"
             style={{
-              fill: "#a61c01",
+              fill: '#a61c01',
             }}
           />
           <path
             d="M4.96 11.998h.641a.641.641 0 0 1 .64.64v.64a.641.641 0 0 1-.64.64h-.64a.64.64 0 0 1-.64-.64v-.64a.64.64 0 0 1 .64-.64"
             style={{
-              fill: "#a61c01",
-              fillRule: "evenodd",
+              fill: '#a61c01',
+              fillRule: 'evenodd',
             }}
           />
           <path
             d="M8.88 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.199 1.2l-.48 7.438a.72.72 0 0 1-1.44 0Z"
             style={{
-              fill: "#a61c01",
+              fill: '#a61c01',
             }}
           />
           <path
             d="M9.759 11.998h.64a.641.641 0 0 1 .64.64v.64a.641.641 0 0 1-.64.64h-.64a.641.641 0 0 1-.64-.64v-.64a.641.641 0 0 1 .64-.64"
             style={{
-              fill: "#a61c01",
-              fillRule: "evenodd",
+              fill: '#a61c01',
+              fillRule: 'evenodd',
             }}
           />
         </g>
@@ -1015,65 +919,61 @@ export const Exclamation2 = ({ styles }) => {
 export const Exclamation3 = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-24"}</title>
+        <title>{'aaronpansringar-24'}</title>
         <g
           data-name="Page 24"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path
             d="M1.68 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.2 1.2L3.6 9.835a.72.72 0 0 1-1.44 0Z"
             style={{
-              fill: "red",
+              fill: 'red',
             }}
           />
           <path
             d="M2.56 11.998h.64a.64.64 0 0 1 .64.64v.64a.64.64 0 0 1-.64.64h-.64a.64.64 0 0 1-.64-.64v-.64a.64.64 0 0 1 .64-.64"
             style={{
-              fill: "red",
-              fillRule: "evenodd",
+              fill: 'red',
+              fillRule: 'evenodd',
             }}
           />
           <path
             d="M6.48 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.2 1.2L8.4 9.835a.72.72 0 0 1-1.44 0Z"
             style={{
-              fill: "red",
+              fill: 'red',
             }}
           />
           <path
             d="M7.36 11.998H8a.64.64 0 0 1 .64.64v.64a.64.64 0 0 1-.64.64h-.64a.64.64 0 0 1-.64-.64v-.64a.64.64 0 0 1 .64-.64"
             style={{
-              fill: "red",
-              fillRule: "evenodd",
+              fill: 'red',
+              fillRule: 'evenodd',
             }}
           />
           <path
             d="M11.279 2.397a1.157 1.157 0 0 1 1.2-1.2 1.216 1.216 0 0 1 1.199 1.2l-.48 7.438a.72.72 0 1 1-1.44 0Z"
             style={{
-              fill: "red",
+              fill: 'red',
             }}
           />
           <path
             d="M12.158 11.998h.64a.64.64 0 0 1 .64.64v.64a.64.64 0 0 1-.64.64h-.64a.64.64 0 0 1-.64-.64v-.64a.64.64 0 0 1 .64-.64"
             style={{
-              fill: "red",
-              fillRule: "evenodd",
+              fill: 'red',
+              fillRule: 'evenodd',
             }}
           />
         </g>
@@ -1085,32 +985,28 @@ export const Exclamation3 = ({ styles }) => {
 export const QuestionMark = ({ styles }) => {
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 15.36 15.36"
-        className={styles}
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.36 15.36" className={styles}>
         <defs>
           <clipPath id="a">
             <path
               d="M0 0h15.36v15.36H0z"
               style={{
-                fill: "none",
+                fill: 'none',
               }}
             />
           </clipPath>
         </defs>
-        <title>{"aaronpansringar-25"}</title>
+        <title>{'aaronpansringar-25'}</title>
         <g
           data-name="Page 25"
           style={{
-            clipPath: "url(#a)",
+            clipPath: 'url(#a)',
           }}
         >
           <path
             d="M7.68 12.238a.96.96 0 1 1-.96.96.96.96 0 0 1 .96-.96"
             style={{
-              fillRule: "evenodd",
+              fillRule: 'evenodd',
             }}
           />
           <path d="M5.52 5.038a.72.72 0 0 1-1.44 0 3.6 3.6 0 1 1 4.799 3.394.724.724 0 0 0-.353.257.746.746 0 0 0-.126.422v1.204a.72.72 0 0 1-1.44 0V9.111a2.151 2.151 0 0 1 .392-1.247 2.176 2.176 0 0 1 1.049-.788A2.161 2.161 0 1 0 5.52 5.038" />
@@ -1158,31 +1054,37 @@ export const BlankSVG = (props) => {
 
 export const ImageIcon = (props) => {
   return (
-    <svg className="h-4 w-4"
-      viewBox="0 0 32 32"
-      version="1.1"
-    >
+    <svg className="h-4 w-4" viewBox="0 0 32 32" version="1.1">
       <title>image-picture</title>
       <desc>Created with Sketch Beta.</desc>
       <defs></defs>
-      <g
-        id="Page-1"
-        stroke="none"
-        stroke-width="1"
-        fill="none"
-        fill-rule="evenodd"
-      >
-        <g
-          id="Icon-Set"
-          transform="translate(-360.000000, -99.000000)"
-          fill="#000000"
-        >
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="Icon-Set" transform="translate(-360.000000, -99.000000)" fill="#000000">
           <path
             d="M368,109 C366.896,109 366,108.104 366,107 C366,105.896 366.896,105 368,105 C369.104,105 370,105.896 370,107 C370,108.104 369.104,109 368,109 L368,109 Z M368,103 C365.791,103 364,104.791 364,107 C364,109.209 365.791,111 368,111 C370.209,111 372,109.209 372,107 C372,104.791 370.209,103 368,103 L368,103 Z M390,116.128 L384,110 L374.059,120.111 L370,116 L362,123.337 L362,103 C362,101.896 362.896,101 364,101 L388,101 C389.104,101 390,101.896 390,103 L390,116.128 L390,116.128 Z M390,127 C390,128.104 389.104,129 388,129 L382.832,129 L375.464,121.535 L384,112.999 L390,118.999 L390,127 L390,127 Z M364,129 C362.896,129 362,128.104 362,127 L362,126.061 L369.945,118.945 L380.001,129 L364,129 L364,129 Z M388,99 L364,99 C361.791,99 360,100.791 360,103 L360,127 C360,129.209 361.791,131 364,131 L388,131 C390.209,131 392,129.209 392,127 L392,103 C392,100.791 390.209,99 388,99 L388,99 Z"
             id="image-picture"
           ></path>
         </g>
       </g>
+    </svg>
+  );
+};
+
+export const ArrowLeftIcon = (props) => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l14 0" />
+      <path d="M5 12l6 6" />
+      <path d="M5 12l6 -6" />
     </svg>
   );
 };
