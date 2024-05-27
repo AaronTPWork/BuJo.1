@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '../axios-instance';
 
 export const useUsers = () => {
@@ -23,4 +23,15 @@ export const useSingleUser = (id) => {
     data: query && query.data ? query.data : [],
     isLoading: query?.isLoading,
   };
+};
+
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (user) => axiosInstance.post('/users', user),
+    onSuccess: () => queryClient.invalidateQueries(['users']),
+  });
+
+  return mutation;
 };
