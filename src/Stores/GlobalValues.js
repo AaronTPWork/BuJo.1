@@ -19,6 +19,7 @@ const defaultValues = {
   currentSearch: '',
   currentFilter: '',
   selectedNote: {},
+  currentUser: {},
 };
 
 export const useGlobalValues = createSelectors(
@@ -62,6 +63,9 @@ export const useGlobalValues = createSelectors(
           setSelectedNote(note) {
             set({ selectedNote: note });
           },
+          setCurrentUser(user) {
+            set({ currentUser: user });
+          },
         },
       }),
       {
@@ -77,7 +81,7 @@ export const useGlobalValues = createSelectors(
           const { actions: _, ...rest } = state;
           return rest;
         },
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
