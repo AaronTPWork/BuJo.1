@@ -31,14 +31,12 @@ export const Home = () => {
       <div className={styles.home}>
         <div className={styles.home_header}>
           <div className="flex flex-row py-2 overflow-scroll md:overflow-hidden scrollbar-hide">
-            {!currentUser.email && (
-              <Link
-                to="/signin"
-                className="text-[#7C7C7C] text-xs border rounded-md py-2 px-4 ml-2 border-gray-600"
-              >
-                SignIn
-              </Link>
-            )}
+            <Link
+              to="/signin"
+              className="text-[#7C7C7C] text-xs border rounded-md py-2 px-4 ml-2 border-gray-600"
+            >
+              SignIn
+            </Link>
             {data?.map((user) => {
               const isSelected = user.id === selectedUserId;
               const isLoggedin = user.email === currentUser.email;
