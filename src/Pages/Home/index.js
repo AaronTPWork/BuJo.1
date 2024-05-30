@@ -17,7 +17,7 @@ export const Home = () => {
     showSearch,
     actions: { changeselectedUserId, changeselectedDate, changeselectedProject, hideSearch },
   } = useGlobalValues();
-  const { currentUser } = useCurrentUser();
+  const { currentUser, setCurrentUser } = useCurrentUser();
   const { data } = useUsers();
 
   useEffect(() => {
@@ -31,40 +31,57 @@ export const Home = () => {
       <div className={styles.home}>
         <div className={styles.home_header}>
           <div className="flex flex-row py-2 overflow-scroll md:overflow-hidden scrollbar-hide">
-            <Link
-              to="/signin"
-              className="text-[#7C7C7C] text-xs border rounded-md py-2 px-4 ml-2 border-gray-600"
-            >
-              SignIn
-            </Link>
-            {data?.map((user) => {
-              const isSelected = user.id === selectedUserId;
-              const isLoggedin = user.email === currentUser.email;
-              return (
-                <div
-                  key={user.id}
-                  onClick={() => {
-                    if (!isSelected) changeselectedUserId(user.id);
-                    else changeselectedUserId('');
+            {!currentUser.email ? (
+              <Link
+                to="/signin"
+                className="text-[#7C7C7C] text-xs border rounded-md py-2 px-4 ml-2 border-gray-600"
+              >
+                SignIn
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  changeselectedUserId('');
+                  setCurrentUser({});
+                }}
+                className="text-[#7C7C7C] text-xs border rounded-md py-2 px-4 ml-2 border-gray-600"
+              >
+                Sign out
+              </button>
+            )}
+            {data
+              ?.filter((user) => user.email === currentUser.email)
+              .map((user) => {
+                const isSelected = user.id === selectedUserId;
+                const isLoggedin = user.email === currentUser.email;
+                return (
+                  <div
+                    key={user.id}
+                    onClick={() => {
+                      if (!isSelected) changeselectedUserId(user.id);
+                      else changeselectedUserId('');
 
-                    changeselectedDate(todayDate);
-                    changeselectedProject('');
-                  }}
-                  className={`flex items-center rounded-lg border px-2 py-1 mx-1 cursor-pointer ${
-                    isSelected ? 'bg-black' : 'bg-white'
-                  } ${isLoggedin ? 'border-black' : 'border-[#7C7C7C]'}`}
-                >
-                  <div className="mr-1">
-                    <UserIcon className="h-4 w-4" fillcolor={isSelected ? '#FFFFFF' : '#7C7C7C'} />
+                      changeselectedDate(todayDate);
+                      changeselectedProject('');
+                    }}
+                    className={`flex items-center rounded-lg border px-2 py-1 mx-1 cursor-pointer ${
+                      isSelected ? 'bg-black' : 'bg-white'
+                    } ${isLoggedin ? 'border-black' : 'border-[#7C7C7C]'}`}
+                  >
+                    <div className="mr-1">
+                      <UserIcon
+                        className="h-4 w-4"
+                        fillcolor={isSelected ? '#FFFFFF' : '#7C7C7C'}
+                      />
+                    </div>
+                    <div>
+                      <span className={`${isSelected ? 'text-white' : 'text-[#7C7C7C]'} text-xs`}>
+                        {user.nickname}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span className={`${isSelected ? 'text-white' : 'text-[#7C7C7C]'} text-xs`}>
-                      {user.nickname}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
         <div className={styles.home_app}>
