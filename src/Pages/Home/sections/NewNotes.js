@@ -1,4 +1,12 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useDeferredValue,
+  useMemo,
+  useCallback,
+} from 'react';
 import ReactModal from 'react-modal';
 
 import { PencilPage, SearchIcon } from '../../../Components/icons';
@@ -12,34 +20,55 @@ import { EditNoteModal } from './modals/EditNoteModal';
 import { ProjectModal } from './modals/ProjectModal';
 import { migrateNote } from '../../../Services/Journal/api';
 import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
+import TextAreaAutoSize from 'react-textarea-autosize';
+import { useDebounce, useDebouncedCallback } from 'use-debounce';
 
+let timeoutId;
 function debounce(func, delay) {
-  let timeoutId;
-
   return function () {
     const context = this;
     const args = arguments;
 
     clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => {
-      func.apply(context, args);
-    }, delay);
+    if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        func.apply(context, args);
+      }, delay);
+    }
   };
 }
 
-export const InputArea = ({ value, handleInput, note, index, onImage, ...props }) => {
+export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, ...props }) => {
   const [localValue, setLocalValue] = useState('');
-  const ref = useRef(null);
+  const [deferred] = useDebounce(localValue);
+
   useEffect(() => {
     setLocalValue(note.text_stream);
   }, [note.text_stream]);
 
-  useLayoutEffect(() => {
-    if (ref.current) {
-      ref.current.style.width = `${ref.current.scrollWidth}px`;
+  useEffect(() => {
+    if (deferred) {
+      handleInput(note, deferred);
     }
-  });
+  }, [deferred]);
+
+  const appendText = useMemo(() => {
+    let res = '';
+    if (note.due_date) {
+      res = `Due: ${note.due_date?.slice(0, 10)}`;
+    }
+
+    if (note.del_email) {
+      res = res + ' Delegated: ' + note.del_email;
+    }
+
+    return res;
+  }, [note]);
+
+  const local = useMemo(() => {
+    return localValue + ' ' + appendText;
+  }, [localValue, appendText]);
 
   return (
     <div className="relative">
@@ -48,26 +77,24 @@ export const InputArea = ({ value, handleInput, note, index, onImage, ...props }
           <img src={note.image_meta} className="w-8 h-8 inline-block" />
         </span>
       ) : null}
-      <input
+      <TextAreaAutoSize
         {...props}
-        type="text"
-        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-fit w-3"
+        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none"
         placeholder={localValue === '' ? 'Type your note here...' : ''}
-        value={localValue ?? ''}
+        value={local}
         onChange={(e) => {
-          const target = e.target;
-          target.style.width = '10px';
-          target.style.width = `${target.scrollWidth + 4}px`;
-
-          setLocalValue(e.target.value);
+          if (e.target.value.includes(appendText)) {
+            console.log(e.target.value.replace(appendText, '').trim());
+            setLocalValue(e.target.value.replace(appendText, '').trim());
+          }
         }}
-        onKeyDown={(e) => handleInput(e, note, index, localValue)}
-        ref={ref}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            onEnter(index);
+          }
+        }}
       />
-      {note.due_date && <span className="p-1 text-red-400">{note.due_date?.slice(0, 10)}</span>}
-      {note.del_email ? (
-        <span className="p-1 text-green-600">Delegated: {note.del_email} </span>
-      ) : null}
     </div>
   );
 };
@@ -105,7 +132,7 @@ const NoteWithAnnotations = () => {
       const lastItem = filteredNotesByProjectStream.length;
       if (lastItem > 0) {
         newNoteRef.current = document.getElementById(`input-ref-${lastItem - 1}`);
-        newNoteRef.current.focus();
+        // newNoteRef.current?.focus();
       }
     }
     return () => {};
@@ -164,40 +191,37 @@ const NoteWithAnnotations = () => {
     });
   };
 
-  const handleInput = (e, note, index, value) => {
-    const newText = value;
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      // if (previousKeyPress === 'Enter') {
-      if (!note.id) {
-        const newNote = {
-          date_created: selectedDate ?? todayDate,
-          user_id: selectedUserId,
-          text_stream: newText,
-        };
-        if (selectedProject) newNote.project_stream = selectedProject;
-        createNote(newNote);
-      } else {
-        debounce(
-          editNote({
-            // ...note,
-            id: note.id,
-            text_stream: newText,
-          }),
-          500,
-        );
-      }
+  const handleEnter = useCallback(
+    (index) => {
       const nextNoteIdx = index + 1;
+
       if (nextNoteIdx <= filteredNotesByProjectStream.length) {
-        newNoteRef.current = document.getElementById(`input-ref-${index - 1}`);
+        newNoteRef.current = document.getElementById(`input-ref-${nextNoteIdx}`);
         newNoteRef.current.focus();
       }
-      //   setPreviousKeyPress('');
-      // } else {
-      //   setPreviousKeyPress(e.key);
-      // }
+    },
+    [newNoteRef],
+  );
+
+  const handleInput = useDebouncedCallback((note, value) => {
+    const newText = value;
+
+    if (!note.id) {
+      const newNote = {
+        date_created: selectedDate ?? todayDate,
+        user_id: selectedUserId,
+        text_stream: newText,
+      };
+      if (selectedProject) newNote.project_stream = selectedProject;
+      createNote(newNote);
+    } else {
+      editNote({
+        // ...note,
+        id: note.id,
+        text_stream: newText,
+      });
     }
-  };
+  }, 500);
 
   const selectPrimaryIcon = ({ iconId, ...rest }, iconRef) => {
     if (!currentNote.id) {
@@ -275,8 +299,8 @@ const NoteWithAnnotations = () => {
             selectedUserId.length > 0 &&
             [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
               return (
-                <div key={`note-detail-${index}`} className="flex w-full items-center">
-                  <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                <div key={`note-detail-${index}`} className="flex w-full items-start">
+                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb]">
                     <BulletIcon
                       refName={'ref_context'}
                       note={note}
@@ -286,7 +310,7 @@ const NoteWithAnnotations = () => {
                       index={index}
                     />
                   </div>
-                  <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb]">
                     <BulletIcon
                       refName={'ref_bullet'}
                       note={note}
@@ -301,6 +325,7 @@ const NoteWithAnnotations = () => {
                       handleInput={handleInput}
                       onImage={() => setOpenImage(note.image_meta)}
                       note={note}
+                      onEnter={handleEnter}
                       index={index}
                       id={`input-ref-${index}`}
                     />

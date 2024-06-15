@@ -22,9 +22,9 @@ export const Home = () => {
 
   useEffect(() => {
     if (!selectedUserId && currentUser.email) {
-      changeselectedUserId(data.find(({ email }) => email === currentUser.email).id);
+      changeselectedUserId(data.find(({ email }) => email === currentUser.email)?.id);
     }
-  }, [selectedUserId, currentUser]);
+  }, [selectedUserId, currentUser, data]);
 
   return (
     <>
@@ -64,9 +64,8 @@ export const Home = () => {
                       changeselectedDate(todayDate);
                       changeselectedProject('');
                     }}
-                    className={`flex items-center rounded-lg border px-2 py-1 mx-1 cursor-pointer ${
-                      isSelected ? 'bg-black' : 'bg-white'
-                    } ${isLoggedin ? 'border-black' : 'border-[#7C7C7C]'}`}
+                    className={`flex items-center rounded-lg border px-2 py-1 mx-1 cursor-pointer ${isSelected ? 'bg-black' : 'bg-white'
+                      } ${isLoggedin ? 'border-black' : 'border-[#7C7C7C]'}`}
                   >
                     <div className="mr-1">
                       <UserIcon
