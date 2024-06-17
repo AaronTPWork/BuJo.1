@@ -56,6 +56,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
+      console.log('note.due_date: ', note.due_date);
       res = `Due: ${note.due_date?.slice(0, 10)}`;
     }
 
@@ -67,7 +68,11 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   }, [note]);
 
   const local = useMemo(() => {
-    return localValue + ' ' + appendText;
+    let res = localValue || '';
+    if (appendText) {
+      res = res + '' + appendText;
+    }
+    return res;
   }, [localValue, appendText]);
 
   return (
@@ -81,11 +86,10 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
         {...props}
         className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none"
         placeholder={localValue === '' ? 'Type your note here...' : ''}
-        value={local}
+        value={local || ''}
         onChange={(e) => {
-          if (e.target.value.includes(appendText)) {
-            console.log(e.target.value.replace(appendText, '').trim());
-            setLocalValue(e.target.value.replace(appendText, '').trim());
+          if (!appendText || (appendText.trim() && e.target.value.endsWith(appendText))) {
+            setLocalValue(e.target.value.replace(appendText, ''));
           }
         }}
         onKeyDown={(e) => {
@@ -221,7 +225,7 @@ const NoteWithAnnotations = () => {
         text_stream: newText,
       });
     }
-  }, 500);
+  }, 1000);
 
   const selectPrimaryIcon = ({ iconId, ...rest }, iconRef) => {
     if (!currentNote.id) {
