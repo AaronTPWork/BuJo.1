@@ -7,7 +7,6 @@ import { format } from 'date-fns';
 import { ProjectItem } from '../SavedNotes';
 import { BulletIcon } from '../components/BulletIcon';
 
-
 export const SearchModal = ({ isModalOpen, closeModal }) => {
   const {
     currentSearch,
@@ -31,8 +30,8 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
     setCurrentSearch(localSearchValue);
     const filterSearch = currentFilter === 'all' ? localSearchValue : currentFilter;
     searchValue({
-      search: filterSearch, 
-      userId: selectedUserId
+      search: filterSearch,
+      userId: selectedUserId,
     });
   };
 
@@ -40,8 +39,8 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
     if (currentSearch === '') return;
     const filterSearch = currentFilter === 'all' ? currentSearch : currentFilter;
     searchValue({
-      search: filterSearch, 
-      userId: selectedUserId
+      search: filterSearch,
+      userId: selectedUserId,
     });
 
     return () => {};
@@ -67,12 +66,14 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               </form>
             </div>
             <div className="px-5 w-72 my-auto border-r mr-5">
-            <div
-            className={"flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer"}
-            onClick={() => {
-              let filter = 'no completed';
-              let savingFilter = 'all'
-              if (currentFilter === 'no completed') {
+              <div
+                className={
+                  'flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer'
+                }
+                onClick={() => {
+                  let filter = 'no completed';
+                  let savingFilter = 'all';
+                  if (currentFilter === 'no completed') {
                     filter = localSearchValue;
                   } else {
                     savingFilter = 'no completed';
@@ -82,13 +83,13 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                   }
                   searchValue({
                     search: filter,
-                    userId: selectedUserId
+                    userId: selectedUserId,
                   });
                   setCurrentFilter(savingFilter);
-            }}
-          >
-            <h3>{currentFilter === 'no completed'? 'All': 'No completed'}</h3>
-          </div>
+                }}
+              >
+                <h3>{currentFilter === 'no completed' ? 'All' : 'No completed'}</h3>
+              </div>
             </div>
             <button
               onClick={handleSubmit}
@@ -118,37 +119,39 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                     }}
                   >
                     <div className="w-full md:w-1/6 md:border-r text-center flex items-center justify-center">
-                      <h3 className="text-xs md:text-lg font-bold">{format(search.date_created, 'dd.MM.yyyy')}</h3>
+                      <h3 className="text-xs md:text-lg font-bold">
+                        {format(search.date_created, 'dd.MM.yyyy')}
+                      </h3>
                     </div>
                     <div className="w-full md:w-1/3 border-r border-b md:py-0 border-gray-300 bg-gray-200 flex items-center">
                       <ProjectItem isSelected height="h-5" id={search.project_stream} />
                     </div>
-                    <div className="flex-1 px-3 flex items-center flex-row">
-                    <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                      <BulletIcon
-                        refName={"ref_context"}
-                        note={search}
-                        selectedIconId={search.context_stream}
-                        getIconName={(ref) => `${ref.name}`}
-                        handleClick={()=>{}}
-                        index={idx}
-                        isDisabled
-                      />
-                    </div>
-                    <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
-                      <BulletIcon
-                        refName={"ref_bullet"}
-                        note={search}
-                        selectedIconId={search.bullet_stream}
-                        getIconName={(ref) =>
-                          `${ref.ref}-${ref.state}-${ref.name}`
-                        }
-                        handleClick={()=>{}}
-                        index={idx}
-                        isDisabled
-                      />
-                    </div>
-                      <h3 className="text-xs md:text-lg flex-1">{search.text_stream}</h3>
+                    <div className="flex-1 px-3 flex items-center flex-row overflow-auto">
+                      <div className="w-[13%] md:w-[7%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                        <BulletIcon
+                          refName={'ref_context'}
+                          note={search}
+                          selectedIconId={search.context_stream}
+                          getIconName={(ref) => `${ref.name}`}
+                          handleClick={() => {}}
+                          index={idx}
+                          isDisabled
+                        />
+                      </div>
+                      <div className="w-[13%] md:w-[9%] h-full flex justify-center items-center border-r border-r-[#e5e7eb]">
+                        <BulletIcon
+                          refName={'ref_bullet'}
+                          note={search}
+                          selectedIconId={search.bullet_stream}
+                          getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
+                          handleClick={() => {}}
+                          index={idx}
+                          isDisabled
+                        />
+                      </div>
+                      <h3 className="text-xs md:text-lg flex-1 overflow-auto">
+                        {search.text_stream}
+                      </h3>
                     </div>
                   </div>
                 );
