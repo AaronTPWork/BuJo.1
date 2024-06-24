@@ -56,7 +56,6 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
-      console.log('note.due_date: ', note.due_date);
       res = `Due: ${note.due_date?.slice(0, 10)}`;
     }
 
@@ -304,7 +303,7 @@ const NoteWithAnnotations = () => {
             [...(filteredNotesByProjectStream || []), {}]?.map((note, index) => {
               return (
                 <div key={`note-detail-${index}`} className="flex w-full items-start">
-                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb]">
+                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb] mt-2">
                     <BulletIcon
                       refName={'ref_context'}
                       note={note}
@@ -314,7 +313,7 @@ const NoteWithAnnotations = () => {
                       index={index}
                     />
                   </div>
-                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb]">
+                  <div className="w-8 min-w-8 max-w-8 h-full items-start flex justify-center border-r border-r-[#e5e7eb] mt-2">
                     <BulletIcon
                       refName={'ref_bullet'}
                       note={note}
