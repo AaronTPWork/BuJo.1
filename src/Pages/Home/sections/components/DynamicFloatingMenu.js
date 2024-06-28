@@ -103,9 +103,10 @@ export const DynamicFloatingMenu = ({
 
   const handleDueDate = async (e) => {
     try {
+      let dateObject = new Date(e);
+      let isoDateString = dateObject.toISOString().slice(0, 19).replace('T', ' ');
       await changeDueDate(e, note);
-      const formattedDate = e ? moment(e).tz('America/New_York').toDate() : '';
-      setDueDate(formattedDate);
+      setDueDate(e);
       updateDate();
     } catch (e) {
       console.error(e);
@@ -187,9 +188,7 @@ export const DynamicFloatingMenu = ({
                   className="icon_button"
                 >
                   {getIconComponent(getIconName(ref), 'h-4')}
-                  {ref?.state !== 'init' ? (
-                    <span className="pl-2 text-left">{getIconName(ref)}</span>
-                  ) : (
+                  {ref?.state == 'init' && note?.bullet_stream == '13' ? (
                     <DatePicker
                       selected={dueDate}
                       className="bg-transparent ml-1.5 w-full cursor-pointer text-black placeholder-black"
@@ -205,6 +204,8 @@ export const DynamicFloatingMenu = ({
                       onCalendarClose={() => setisOpened(false)}
                       calendarClassName="relative"
                     />
+                  ) : (
+                    <span className="pl-2 text-left">{getIconName(ref)}</span>
                   )}
                 </button>
               );
