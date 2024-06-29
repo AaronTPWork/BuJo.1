@@ -103,7 +103,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
           }
         }}
       />
-      Time: {dueDate}
+      {note?.bullet_stream == '13' && `Time: ${dueDate}`}
     </div>
   );
 };
@@ -364,7 +364,7 @@ const NoteWithAnnotations = () => {
           refName={'ref_bullet'}
           getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
           note={selectedNote}
-          updateDate={() => window.location.reload()}
+          // updateDate={() => window.location.reload()}
         />
       )}
       {showSecondaryFloatingMenu && (
