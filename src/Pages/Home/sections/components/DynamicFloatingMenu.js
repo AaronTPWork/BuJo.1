@@ -101,11 +101,26 @@ export const DynamicFloatingMenu = ({
   const handleDelegate = (email) =>
     !isOpened && selectIcon({ iconId: ref.id, del_email: email }, ref, isOpened);
 
+  const formatDueDate = (e) => {
+    const date = new Date(e);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    return formattedDate;
+  };
+
   const handleDueDate = async (e) => {
     try {
       let dateObject = new Date(e);
       let isoDateString = dateObject.toISOString().slice(0, 19).replace('T', ' ');
-      await changeDueDate(e, note);
+      await changeDueDate(formatDueDate(e), note);
       setDueDate(e);
       updateDate();
     } catch (e) {
