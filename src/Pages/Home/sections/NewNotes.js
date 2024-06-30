@@ -74,7 +74,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const local = useMemo(() => {
     let res = localValue || '';
     if (appendText) {
-      res = res;
+      res = res + '' + appendText;
     }
     return res;
   }, [localValue, appendText]);
