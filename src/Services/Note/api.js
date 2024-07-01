@@ -1,7 +1,7 @@
-import { axiosInstance } from '../axios-instance';
+import { axiosInstanceBase } from '../axios-instance';
 
 export const changeDueDate = async (due_date, datum) => {
-  return axiosInstance.put(`/journal/daily_journal/${datum?.id}`, {
+  return axiosInstanceBase.put(`/journal/daily_journal/${datum?.id}`, {
     text_stream: datum?.text_stream,
     state_stream: datum?.state_stream,
     context_stream: datum?.context_stream,
