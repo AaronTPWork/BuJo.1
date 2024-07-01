@@ -23,8 +23,6 @@ import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 import TextAreaAutoSize from 'react-textarea-autosize';
 import { useDebounce, useDebouncedCallback } from 'use-debounce';
 
-import 'react-datepicker/dist/react-datepicker.css';
-
 let timeoutId;
 function debounce(func, delay) {
   return function () {
@@ -43,13 +41,10 @@ function debounce(func, delay) {
 
 export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, ...props }) => {
   const [localValue, setLocalValue] = useState('');
-  const [dueDate, setDueDate] = useState('');
   const [deferred] = useDebounce(localValue);
 
   useEffect(() => {
     setLocalValue(note.text_stream);
-    const formattedDate = note.due_date || '';
-    setDueDate(formattedDate);
   }, [note.text_stream]);
 
   useEffect(() => {
@@ -74,13 +69,13 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const local = useMemo(() => {
     let res = localValue || '';
     if (appendText) {
-      res = res;
+      res = res + '' + appendText;
     }
     return res;
   }, [localValue, appendText]);
 
   return (
-    <div className="relative flex justify-start">
+    <div className="relative">
       {note.image_meta ? (
         <span onClick={onImage}>
           <img src={note.image_meta} className="w-8 h-8 inline-block" />
@@ -88,7 +83,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
       ) : null}
       <TextAreaAutoSize
         {...props}
-        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 resize-none w-fit"
+        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none"
         placeholder={localValue === '' ? 'Type your note here...' : ''}
         value={local || ''}
         onChange={(e) => {
@@ -103,7 +98,6 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
           }
         }}
       />
-      Time: {dueDate}
     </div>
   );
 };
@@ -129,7 +123,7 @@ const NoteWithAnnotations = () => {
   const [currentNote, setcurrentNote] = useState();
   const [showModal, setshowModal] = useState(false);
   const qClient = useQueryClient();
-  const [selectedNote, setSelectedNote] = useState(null);
+
   const [openImage, setOpenImage] = useState('');
 
   const filteredNotesByProjectStream = notes?.filter(
@@ -181,7 +175,6 @@ const NoteWithAnnotations = () => {
     setShowSecondaryFloatingMenu(false);
     setFloatingMenuPosition({ x: buttonPosition.x, y: buttonPosition.y - 165 });
     setShowPrimaryFloatingMenu(true);
-    setSelectedNote(note);
   };
 
   const handleSecondaryClick = ({ event, note }) => {
@@ -254,6 +247,7 @@ const NoteWithAnnotations = () => {
     if (iconRef && iconRef.state === 'migrated' && currentNote) {
       migrate({ noteId: currentNote.id });
     }
+    setShowPrimaryFloatingMenu(false);
   };
 
   const selectSecondaryIcon = ({ iconId, ...rest }) => {
@@ -363,8 +357,6 @@ const NoteWithAnnotations = () => {
           selectedIcon={currentNote?.selectedIconRef}
           refName={'ref_bullet'}
           getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
-          note={selectedNote}
-          updateDate={() => window.location.reload()}
         />
       )}
       {showSecondaryFloatingMenu && (
