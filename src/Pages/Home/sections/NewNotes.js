@@ -56,7 +56,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
-      res = `Due: ${note.due_date?.slice(0, 10)}`;
+      res = `Due_date: ${note.due_date}`;
     }
 
     if (note.del_email) {
@@ -357,6 +357,7 @@ const NoteWithAnnotations = () => {
           selectedIcon={currentNote?.selectedIconRef}
           refName={'ref_bullet'}
           getIconName={(ref) => `${ref.ref}-${ref.state}-${ref.name}`}
+          note={currentNote}
         />
       )}
       {showSecondaryFloatingMenu && (
