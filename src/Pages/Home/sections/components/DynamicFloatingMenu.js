@@ -36,6 +36,8 @@ import {
 } from '../../../../Components/icons';
 import { useBulletIcons } from '../../../../Services/Reference/hooks';
 import DelegateModal from './DelegateModal';
+import DatePicker from "react-datepicker"; // Import DatePicker Component
+import "react-datepicker/dist/react-datepicker.css";
 
 const iconComponents = {
   'bullet-init-note': InitNote,
@@ -159,6 +161,28 @@ export const DynamicFloatingMenu = ({
                     <span className="pl-2 text-left">{getIconName(ref)}</span>
                   </button>
                 );
+              } else if(getIconName(ref).startsWith("diamond")) { // Diamond appointments
+                return (
+                  <div // User Div tag rather than Button because DatePicker
+                    key={`icon_button_${idx}`}
+                    className="icon_button cursor-pointer"
+                  >
+                    {getIconComponent(getIconName(ref), 'h-4')}
+                    <label htmlFor={`${getIconName(ref)}-due-date`} className="pl-2 text-left cursor-pointer select-none">
+                      {getIconName(ref)}
+                    </label>
+                    <DatePicker
+                      id={`${getIconName(ref)}-due-date`}
+                      showTimeInput // Time selectable datepicker dialog
+                      selected={ note?.due_date }
+                      onChange={ date => {
+                        const utcDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)); // Convert to UTC based time
+                        selectIcon({iconId: ref.id, due_date: utcDateTime});
+                      }}
+                      className='hidden'
+                    />
+                  </div>
+                )
               }
 
               return (
