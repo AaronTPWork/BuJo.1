@@ -34,9 +34,7 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
                   id={`${getIconName(ref)}-due-date`}
                   selected={ note?.due_date }
                   onChange={ date => {
-                    let utcDateTime = date;
-                    utcDateTime.setHours(0, 0, 0); // Set time for 00:00:00
-                    utcDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)); // Convert to UTC based time
+                    const utcDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)); // Convert to UTC based time
                     selectIcon({iconId: ref.id, due_date: utcDateTime})
                   }}
                   className='hidden'
