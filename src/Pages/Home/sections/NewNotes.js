@@ -56,8 +56,7 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
-      let date_str = note.due_date.endsWith("00:00:00") ? note.due_date.slice(0,10) : note.due_date;
-      res = `Due: ${date_str}`;
+      res = `Due_date: ${note.due_date}`;
     }
 
     if (note.del_email) {
