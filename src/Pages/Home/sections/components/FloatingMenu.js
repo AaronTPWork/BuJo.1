@@ -2,9 +2,17 @@ import React from 'react';
 
 import { useJournalRefs } from '../../../../Services/Reference';
 import { getIconComponent } from './DynamicFloatingMenu';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-
-export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refName, getIconName, note }) => {
+export const FloatingMenu = ({
+  floatingMenuPosition,
+  closeMenu,
+  selectIcon,
+  refName,
+  getIconName,
+  note,
+}) => {
   const { data } = useJournalRefs(refName);
 
   return (
@@ -24,26 +32,26 @@ export const FloatingMenu = ({ floatingMenuPosition, closeMenu, selectIcon, refN
           data?.map((ref, idx) => {
             if (getIconName(ref) === 'reminder') {
               return (
-                <button key={`icon_button_${idx}`} className="icon_button">
+                <div key={`icon_button_${idx}`} className="icon_button cursor-pointer">
                   {getIconComponent(getIconName(ref), 'h-4')}
-                  <label htmlFor="reminder-due-date" className="pl-2 text-left">
+                  <label
+                    htmlFor={`${getIconName(ref)}-due-date`}
+                    className="pl-2 text-left cursor-pointer select-none"
+                  >
                     {getIconName(ref)}
                   </label>
-                  <input
-                    id="reminder-due-date"
-                    type="date"
-                    value={note?.due_date?.slice(0, 10)}
-                    style={{
-                      opacity: 0,
-                      position: 'absolute',
-                      zIndex: -1,
-                      left: 150,
-                      top: 150,
+                  <DatePicker
+                    id={`${getIconName(ref)}-due-date`}
+                    selected={note?.due_date}
+                    onChange={(date) => {
+                      let utcDateTime = date;
+                      utcDateTime.setHours(0, 0, 0);
+                      utcDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+                      selectIcon({ iconId: ref.id, due_date: utcDateTime });
                     }}
-                    onFocus={(event) => event.target.showPicker?.()}
-                    onChange={(e) => selectIcon({ iconId: ref.id, due_date: e.target.value })}
+                    className="hidden"
                   />
-                </button>
+                </div>
               );
             }
 
