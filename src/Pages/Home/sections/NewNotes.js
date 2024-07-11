@@ -1,12 +1,4 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useDeferredValue,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useEffect, useLayoutEffect, useState, useMemo, useCallback } from 'react';
 import ReactModal from 'react-modal';
 
 import { PencilPage, SearchIcon } from '../../../Components/icons';
@@ -22,30 +14,17 @@ import { migrateNote } from '../../../Services/Journal/api';
 import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 import TextAreaAutoSize from 'react-textarea-autosize';
 import { useDebounce, useDebouncedCallback } from 'use-debounce';
-
-let timeoutId;
-function debounce(func, delay) {
-  return function () {
-    const context = this;
-    const args = arguments;
-
-    clearTimeout(timeoutId);
-
-    if (!timeoutId) {
-      timeoutId = setTimeout(() => {
-        func.apply(context, args);
-      }, delay);
-    }
-  };
-}
+import { format, parseISO } from 'date-fns';
 
 export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, ...props }) => {
   const [localValue, setLocalValue] = useState('');
   const [deferred] = useDebounce(localValue);
 
   useEffect(() => {
-    setLocalValue(note.text_stream);
-  }, [note.text_stream]);
+    if (localValue === '' && note.text_stream) {
+      setLocalValue(note.text_stream);
+    }
+  }, [localValue, note.text_stream]);
 
   useEffect(() => {
     if (deferred) {
@@ -56,7 +35,14 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
-      res = `Due: ${note.due_date?.slice(0, 10)}`;
+      const REMINDER_CONTEXT_ID = '2';
+      const DUE_DATE = format(parseISO(note?.due_date), 'yyyy-MM-dd');
+      const DUE_TIME = format(parseISO(note?.due_date), 'hh:mm aaa');
+      let date_str =
+        note.context_stream === REMINDER_CONTEXT_ID
+          ? `Due: ${DUE_DATE}`
+          : `Time: ${DUE_DATE} ${DUE_TIME}`;
+      res = date_str;
     }
 
     if (note.del_email) {
@@ -66,14 +52,6 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
     return res;
   }, [note]);
 
-  const local = useMemo(() => {
-    let res = localValue || '';
-    if (appendText) {
-      res = res + '' + appendText;
-    }
-    return res;
-  }, [localValue, appendText]);
-
   return (
     <div className="relative">
       {note.image_meta ? (
@@ -81,15 +59,14 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
           <img src={note.image_meta} className="w-8 h-8 inline-block" />
         </span>
       ) : null}
+      {appendText && <div className="absolute -top-2 text-xs text-gray-500">{appendText}</div>}
       <TextAreaAutoSize
         {...props}
-        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none"
+        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none pb-2"
         placeholder={localValue === '' ? 'Type your note here...' : ''}
-        value={local || ''}
+        value={localValue || ''}
         onChange={(e) => {
-          if (!appendText || (appendText.trim() && e.target.value.endsWith(appendText))) {
-            setLocalValue(e.target.value.replace(appendText, ''));
-          }
+          setLocalValue(e.target.value);
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {

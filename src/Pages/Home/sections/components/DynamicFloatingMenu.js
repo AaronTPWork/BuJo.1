@@ -36,6 +36,7 @@ import {
 } from '../../../../Components/icons';
 import { useBulletIcons } from '../../../../Services/Reference/hooks';
 import DelegateModal from './DelegateModal';
+import DatePicker from 'react-datepicker';
 
 const iconComponents = {
   'bullet-init-note': InitNote,
@@ -88,7 +89,11 @@ export const DynamicFloatingMenu = ({
   note,
 }) => {
   const { data } = useBulletIcons(selectedIcon);
-
+  // date used to show in the date picker
+  const [selectedDate, setSelectedDate] = useState(note?.due_date ?? '');
+  // date used to send to the backend in UTC -6 format
+  const [selectedUtcDate, setSelectedUtcDate] = useState(note?.due_date ?? '');
+  const calRef = React.useRef();
   const [ref, setRef] = useState();
 
   const handleDelegate = (email) => {
@@ -158,6 +163,45 @@ export const DynamicFloatingMenu = ({
                     {getIconComponent(getIconName(ref), 'h-4')}
                     <span className="pl-2 text-left">{getIconName(ref)}</span>
                   </button>
+                );
+              } else if (getIconName(ref) === 'diamond-init-appointment') {
+                return (
+                  <div key={`icon_button_${idx}`} className="icon_button cursor-pointer">
+                    {getIconComponent(getIconName(ref), 'h-4')}
+                    <label
+                      htmlFor={`${getIconName(ref)}-due-date`}
+                      className="pl-2 text-left cursor-pointer select-none"
+                    >
+                      {getIconName(ref)}
+                    </label>
+                    <DatePicker
+                      id={`${getIconName(ref)}-due-date`}
+                      showTimeInput
+                      ref={calRef}
+                      selected={selectedDate}
+                      shouldCloseOnSelect={false}
+                      onChange={(date) => {
+                        const utcDateTime = new Date(
+                          date.getTime() - date.getTimezoneOffset() * 60000,
+                        );
+                        setSelectedUtcDate(utcDateTime);
+                        setSelectedDate(date);
+                      }}
+                      className="hidden"
+                    >
+                      <div className=" bottom-0">
+                        <button
+                          className="w-full border-2 border-black ml-1 p-3 rounded-xl hover:bg-slate-100 cursor-pointer"
+                          onClick={() => {
+                            selectIcon({ iconId: ref.id, due_date: selectedUtcDate });
+                            calRef.current.setOpen(false);
+                          }}
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    </DatePicker>
+                  </div>
                 );
               }
 
