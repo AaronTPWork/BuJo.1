@@ -10,7 +10,6 @@ import { BulletIcon } from '../components/BulletIcon';
 export const SearchModal = ({ isModalOpen, closeModal }) => {
   const {
     currentSearch,
-    selectedUserId,
     currentFilter,
     actions: {
       setCurrentSearch,
@@ -28,19 +27,14 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCurrentSearch(localSearchValue);
-    const filterSearch = currentFilter === 'all' ? localSearchValue : currentFilter;
     searchValue({
-      search: filterSearch,
-      userId: selectedUserId,
+      search: localSearchValue,
     });
   };
 
   useEffect(() => {
-    if (currentSearch === '') return;
-    const filterSearch = currentFilter === 'all' ? currentSearch : currentFilter;
     searchValue({
-      search: filterSearch,
-      userId: selectedUserId,
+      search: currentSearch,
     });
 
     return () => {};
@@ -71,24 +65,16 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                   'flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer'
                 }
                 onClick={() => {
-                  let filter = 'no completed';
-                  let savingFilter = 'all';
-                  if (currentFilter === 'no completed') {
-                    filter = localSearchValue;
-                  } else {
-                    savingFilter = 'no completed';
-                    filter = 'no completed';
-                    setCurrentSearch('');
-                    setLocalSearchValue('');
-                  }
+                  let savingFilter = 'no completed';
+                  if (currentFilter === 'no completed') savingFilter = 'all';
+
                   searchValue({
-                    search: filter,
-                    userId: selectedUserId,
+                    search: localSearchValue,
                   });
                   setCurrentFilter(savingFilter);
                 }}
               >
-                <h3>{currentFilter === 'no completed' ? 'All' : 'No completed'}</h3>
+                <h3>{currentFilter === 'no completed' ? 'No completed' : 'All'}</h3>
               </div>
             </div>
             <button
