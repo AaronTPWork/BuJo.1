@@ -35,14 +35,18 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
   const appendText = useMemo(() => {
     let res = '';
     if (note.due_date) {
-      const REMINDER_CONTEXT_ID = '2';
-      const DUE_DATE = format(parseISO(note?.due_date), 'yyyy-MM-dd');
-      const DUE_TIME = format(parseISO(note?.due_date), 'hh:mm aaa');
-      let date_str =
-        note.context_stream === REMINDER_CONTEXT_ID
-          ? `Due: ${DUE_DATE}`
-          : `Time: ${DUE_DATE} ${DUE_TIME}`;
-      res = date_str;
+      try {
+        const REMINDER_CONTEXT_ID = '2';
+        const DUE_DATE = format(parseISO(note?.due_date), 'yyyy-MM-dd');
+        const DUE_TIME = format(parseISO(note?.due_date), 'hh:mm aaa');
+        let date_str =
+          note.context_stream === REMINDER_CONTEXT_ID
+            ? `Due: ${DUE_DATE}`
+            : `Time: ${DUE_DATE} ${DUE_TIME}`;
+        res = date_str;
+      } catch (error) {
+        console.error('Error parsing date', note?.due_date, error);
+      }
     }
 
     if (note.del_email) {
