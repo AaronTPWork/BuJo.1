@@ -1,5 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../axios-instance';
+import { useGlobalValues } from '../../Stores/GlobalValues';
+import { parseISO } from 'date-fns';
 
 export const useDailyJournals = () => {
   const { data, isLoading } = useQuery({
@@ -15,7 +17,9 @@ export const useDailyJournalNotes = (date, search = 'no completed') => {
     queryKey: ['journals', date, search],
     queryFn: () =>
       axiosInstance.get(
-        `/daily_journal_date_task?date_created=${date}${search !== 'all' ? `&search=${search}` : ''}`
+        `/daily_journal_date_task?date_created=${date}${
+          search !== 'all' ? `&search=${search}` : ''
+        }`,
       ),
   });
 
@@ -32,18 +36,35 @@ export const useDailyJournalsByUser = (userId) => {
 };
 
 export const useDailyJournalsBySearch = () => {
+  const { selectedUserId, currentFilter } = useGlobalValues();
   const {
     mutate: searchValue,
     data,
     isLoading,
   } = useMutation({
     mutationFn: (data) => {
-      const {search, userId} = data;
-      if (search === 'no completed')
-        return axiosInstance.get(`/journal_search_task?search=${search}&user_id=${userId ?? '0'}`);
-      else return axiosInstance.get(`/journal_search?search=${search}&user_id=${userId ?? '0'}`);
+      const { search } = data;
+      if (currentFilter === 'no completed')
+        return axiosInstance.get(
+          `/journal_search_task?search=${search}&user_id=${
+            selectedUserId ?? '0'
+          }&state_stream=${currentFilter}`,
+        );
+      else
+        return axiosInstance.get(
+          `/journal_search?search=${search}&user_id=${selectedUserId ?? '0'}`,
+        );
     },
   });
 
-  return { searches: data && data.data ? Object.values(data?.data) : [], isLoading, searchValue };
+  return {
+    searches:
+      data && data.data
+        ? Object.values(data?.data)?.sort(
+            (a, b) => parseISO(b.date_created) - parseISO(a.date_created),
+          )
+        : [],
+    isLoading,
+    searchValue,
+  };
 };

@@ -42,7 +42,7 @@ export const FloatingMenu = ({
                   </label>
                   <DatePicker
                     id={`${getIconName(ref)}-due-date`}
-                    selected={note?.due_date}
+                    selected={note?.due_date ?? ''}
                     onChange={(date) => {
                       let utcDateTime = date;
                       utcDateTime.setHours(0, 0, 0);
