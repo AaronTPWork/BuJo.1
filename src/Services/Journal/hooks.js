@@ -50,6 +50,10 @@ export const useDailyJournalsBySearch = () => {
             selectedUserId ?? '0'
           }&state_stream=${currentFilter}`,
         );
+      else if (currentFilter === 'appointment')
+        return axiosInstance.get(
+          `/journal_search_appointment?search=${search}&user_id=${selectedUserId ?? '0'}`,
+        );
       else
         return axiosInstance.get(
           `/journal_search?search=${search}&user_id=${selectedUserId ?? '0'}`,
@@ -60,9 +64,16 @@ export const useDailyJournalsBySearch = () => {
   return {
     searches:
       data && data.data
-        ? Object.values(data?.data)?.sort(
-            (a, b) => parseISO(b.date_created) - parseISO(a.date_created),
-          )
+        ? Object.values(data?.data)?.sort((a, b) => {
+            if (currentFilter === 'appointment') {
+              try {
+                return parseISO(a.due_date) - parseISO(b.due_date);
+              } catch (err) {
+                return parseISO(b.date_created) - parseISO(a.date_created);
+              }
+            }
+            return parseISO(b.date_created) - parseISO(a.date_created);
+          })
         : [],
     isLoading,
     searchValue,
