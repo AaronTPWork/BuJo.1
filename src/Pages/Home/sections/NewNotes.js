@@ -14,7 +14,7 @@ import { migrateNote } from '../../../Services/Journal/api';
 import { DynamicFloatingMenu } from './components/DynamicFloatingMenu';
 import TextAreaAutoSize from 'react-textarea-autosize';
 import { useDebounce, useDebouncedCallback } from 'use-debounce';
-import { format, parseISO } from 'date-fns';
+import { appendDueDate } from '../../../Services/Journal/utils';
 
 export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, ...props }) => {
   const [localValue, setLocalValue] = useState('');
@@ -34,20 +34,8 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
 
   const appendText = useMemo(() => {
     let res = '';
-    if (note.due_date) {
-      try {
-        const REMINDER_CONTEXT_ID = '2';
-        const DUE_DATE = format(parseISO(note?.due_date), 'yyyy-MM-dd');
-        const DUE_TIME = format(parseISO(note?.due_date), 'hh:mm aaa');
-        let date_str =
-          note.context_stream === REMINDER_CONTEXT_ID
-            ? `Due: ${DUE_DATE}`
-            : `Time: ${DUE_DATE} ${DUE_TIME}`;
-        res = date_str;
-      } catch (error) {
-        console.error('Error parsing date', note?.due_date, error);
-      }
-    }
+    const dueDateText = appendDueDate(note);
+    res = dueDateText ? dueDateText : '';
 
     if (note.del_email) {
       res = res + ' Delegated: ' + note.del_email;
