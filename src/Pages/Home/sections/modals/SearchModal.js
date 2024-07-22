@@ -6,6 +6,7 @@ import { useGlobalValues } from '../../../../Stores/GlobalValues';
 import { format } from 'date-fns';
 import { ProjectItem } from '../SavedNotes';
 import { BulletIcon } from '../components/BulletIcon';
+import { appendDueDate } from '../../../../Services/Journal/utils';
 
 export const SearchModal = ({ isModalOpen, closeModal }) => {
   const {
@@ -23,6 +24,11 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
 
   const [localSearchValue, setLocalSearchValue] = useState(currentSearch);
   const { searchValue, searches } = useDailyJournalsBySearch();
+  const options = [
+    { label: 'All', value: 'all' },
+    { label: 'Appointment', value: 'appointment' },
+    { label: 'No Completed', value: 'no completed' },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,21 +66,22 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               </form>
             </div>
             <div className="px-5 w-72 my-auto border-r mr-5">
-              <div
-                className={
-                  'flex items-center border-2 border-black m-4 p-3 rounded-xl hover:bg-slate-100 cursor-pointer'
-                }
-                onClick={() => {
-                  let savingFilter = 'no completed';
-                  if (currentFilter === 'no completed') savingFilter = 'all';
-
-                  searchValue({
-                    search: localSearchValue,
-                  });
-                  setCurrentFilter(savingFilter);
-                }}
-              >
-                <h3>{currentFilter === 'no completed' ? 'No completed' : 'All'}</h3>
+              <div className="p-2 rounded-xl border">
+                <select
+                  value={currentFilter}
+                  onChange={(e) => {
+                    setCurrentFilter(e.target.value);
+                    searchValue({
+                      search: currentSearch,
+                    });
+                  }}
+                >
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <button
@@ -92,6 +99,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
           ) : (
             <div className="flex flex-col h-80 overflow-y-scroll">
               {searches.map((search, idx) => {
+                const dueDateText = appendDueDate(search);
                 return (
                   <div
                     key={`search-${idx}`}
@@ -136,7 +144,8 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                         />
                       </div>
                       <h3 className="text-xs md:text-lg flex-1 overflow-auto">
-                        {search.text_stream}
+                        {search.text_stream}{' '}
+                        {dueDateText && <div className="text-xs text-gray-500">{dueDateText}</div>}
                       </h3>
                     </div>
                   </div>
