@@ -23,6 +23,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
   } = useGlobalValues();
 
   const [localSearchValue, setLocalSearchValue] = useState(currentSearch);
+  const [localSelectedFilter, setLocalSelectedFilter] = useState(currentFilter);
   const { searchValue, searches } = useDailyJournalsBySearch();
   const options = [
     { label: 'All', value: 'all' },
@@ -33,6 +34,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCurrentSearch(localSearchValue);
+    setCurrentFilter(localSelectedFilter);
     searchValue({
       search: localSearchValue,
     });
@@ -68,12 +70,9 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
             <div className="px-5 w-72 my-auto border-r mr-5">
               <div className="p-2 rounded-xl border">
                 <select
-                  value={currentFilter}
+                  value={localSelectedFilter}
                   onChange={(e) => {
-                    setCurrentFilter(e.target.value);
-                    searchValue({
-                      search: currentSearch,
-                    });
+                    setLocalSelectedFilter(e.target.value);
                   }}
                 >
                   {options.map((option) => (
