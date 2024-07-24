@@ -67,7 +67,7 @@ export const useDailyJournalsBySearch = () => {
         ? Object.values(data?.data)?.sort((a, b) => {
             if (currentFilter === 'appointment') {
               try {
-                return parseISO(a.due_date) - parseISO(b.due_date);
+                return parseISO(b.due_date) - parseISO(a.due_date);
               } catch (err) {
                 return parseISO(b.date_created) - parseISO(a.date_created);
               }
