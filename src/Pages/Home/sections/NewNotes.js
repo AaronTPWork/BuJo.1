@@ -48,13 +48,15 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
     <div className="relative">
       {note.image_meta ? (
         <span onClick={onImage}>
-          <img src={note.image_meta} className="w-8 h-8 inline-block" />
+          <img src={note.image_meta} className="w-8 h-8 inline-block" alt="note" />
         </span>
       ) : null}
       {appendText && <div className="absolute -top-2 text-xs text-gray-500">{appendText}</div>}
       <TextAreaAutoSize
         {...props}
-        className="border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none pb-2"
+        className={`border-none inline-block outline-none border-gray-300 p-1 leading-6 whitespace-pre-wrap h-14 md:h-8 w-full resize-none pb-2 ${
+          appendText.includes('Delegated') ? 'mt-5 md:mt-0' : ''
+        }`}
         placeholder={localValue === '' ? 'Type your note here...' : ''}
         value={localValue || ''}
         onChange={(e) => {
