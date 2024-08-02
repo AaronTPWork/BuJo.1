@@ -85,7 +85,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
               </div>
               <button
                 onClick={handleSubmit}
-                className="flex flex-row items-center py-1 px-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 mt-3"
+                className="flex flex-row items-center py-1 px-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 md:mt-0 mt-3"
               >
                 <SearchIcon styles={'w-4 my-auto text-[#7C7C7C]'} />
                 <h3 className="text-[#7C7C7C] ml-1 text-sm md:text-md">Search</h3>
