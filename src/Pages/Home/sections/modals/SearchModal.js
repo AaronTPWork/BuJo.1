@@ -103,7 +103,7 @@ export const SearchModal = ({ isModalOpen, closeModal }) => {
                 return (
                   <div
                     key={`search-${idx}`}
-                    className="flex flex-col mb-5 md:flex-row md:py-0 w-full border-b border-t cursor-pointer items-center hover:bg-gray-100"
+                    className="flex flex-col mb-5 md:mb-0 md:flex-row md:py-0 w-full border-b border-t cursor-pointer items-center hover:bg-gray-100"
                     onClick={() => {
                       changeselectedUserId(search.user_id ?? '0');
                       changeselectedDate(format(new Date(search.date_created), 'yyyy-MM-dd'));
