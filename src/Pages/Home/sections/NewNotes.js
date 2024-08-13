@@ -24,13 +24,14 @@ export const InputArea = ({ value, handleInput, note, index, onImage, onEnter, .
     if (localValue === '' && note.text_stream) {
       setLocalValue(note.text_stream);
     }
-  }, [localValue, note.text_stream]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (deferred) {
       handleInput(note, deferred);
     }
-  }, [deferred]);
+  }, [deferred, handleInput, note]);
 
   const appendText = useMemo(() => {
     let res = '';
@@ -110,7 +111,7 @@ const NoteWithAnnotations = () => {
       }
     }
     return () => {};
-  }, [filteredNotesByProjectStream]);
+  }, [filteredNotesByProjectStream, newNoteRef]);
 
   const invalidateQueries = () => {
     qClient.invalidateQueries({
@@ -174,7 +175,7 @@ const NoteWithAnnotations = () => {
         newNoteRef.current.focus();
       }
     },
-    [newNoteRef],
+    [filteredNotesByProjectStream.length, newNoteRef],
   );
 
   const handleInput = useDebouncedCallback((note, value) => {
